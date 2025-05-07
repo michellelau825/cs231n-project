@@ -1,0 +1,14 @@
+{
+    "back_height": 0.8,
+    "has_arm": true,
+    "arm_thickness": 0.05,
+    "arm_height": 0.05,
+    "arm_y": 0.9,
+    "arm_z": 0.6,
+    "arm_mid": [
+        0,
+        0.05,
+        0.05
+    ],
+    "is_seat_round": false
+}

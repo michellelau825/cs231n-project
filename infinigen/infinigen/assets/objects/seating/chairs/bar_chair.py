@@ -6,6 +6,9 @@
 
 import bpy
 from numpy.random import choice, uniform
+import json
+from pathlib import Path
+import numpy as np
 
 from infinigen.assets.material_assignments import AssetList
 from infinigen.assets.objects.seating.chairs.seats.round_seats import (
@@ -62,6 +65,10 @@ class BarChairFactory(AssetFactory):
             )
 
         self.params.update(self.material_params)
+
+        print("\nParams dictionary:")
+        for key, value in self.params.items():
+            print(f"{key}: {value}")
 
     def get_material_params(self, leg_style):
         material_assignments = AssetList["BarChairFactory"](leg_style=leg_style)

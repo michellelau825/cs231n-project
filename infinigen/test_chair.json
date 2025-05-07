@@ -1,0 +1,29 @@
+{
+    "Top Profile Width": 0.4,
+    "Top Thickness": 0.08,
+    "Height": 1.0,
+    "Top Height": 0.92,
+    "Leg Style": "straight",
+    "Leg NGon": 32,
+    "Leg Placement Top Relative Scale": 0.7,
+    "Leg Placement Bottom Relative Scale": 1.2,
+    "Leg Height": 1.0,
+    "Leg Number": 4,
+    "Leg Diameter": 0.05,
+    "Leg Curve Control Points": [
+        [
+            0.0,
+            1.0
+        ],
+        [
+            0.4,
+            0.9
+        ],
+        [
+            1.0,
+            0.5
+        ]
+    ],
+    "Strecher Relative Pos": 0.75,
+    "Strecher Increament": 1
+}

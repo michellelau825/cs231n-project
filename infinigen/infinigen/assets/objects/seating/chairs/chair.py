@@ -5,6 +5,8 @@
 import bpy
 import numpy as np
 from numpy.random import uniform
+from pathlib import Path 
+import json
 
 from infinigen.assets.material_assignments import AssetList
 from infinigen.assets.utils.decorate import (
@@ -114,7 +116,37 @@ class ChairFactory(AssetFactory):
             # self.clothes_scatter = ClothesCover(factory_fn=blanket.BlanketFactory, width=log_uniform(.8, 1.2),
             #                                    size=uniform(.8, 1.2)) if uniform() < .3 else NoApply()
             self.clothes_scatter = NoApply()
+            params_path = Path('infinigen/assets/objects/seating/chairs/params/regular/generated_chair.json')
+            if params_path.exists():
+                with open(params_path, 'r') as f:
+                    params = json.load(f)  
+                print(f"Loaded params: {params}")
+                if 'arm_mid' in params:
+                    params['arm_mid'] = np.array(params['arm_mid'])
+                if 'leg_y_offset' in params:
+                    params['leg_y_offset'] = tuple(params['leg_y_offset'])
+                if 'leg_offset_bar' in params:
+                    params['leg_offset_bar'] = tuple(params['leg_offset_bar'])
+                
+                for key, value in params.items():
+                    if hasattr(self, key):
+                        setattr(self, key, value)
+                        print(f"Set {key} = {value}")
+            else:
+                print(f"Params path does not exist: {params_path.absolute()}")
+            # from infinigen.assets.clothes import blanket
+            # from infinigen.assets.scatters.clothes import ClothesCover
+            # self.clothes_scatter = ClothesCover(factory_fn=blanket.BlanketFactory, width=log_uniform(.8, 1.2),
+            #                                    size=uniform(.8, 1.2)) if uniform() < .3 else NoApply()
+            self.clothes_scatter = NoApply()
             self.post_init()
+        # Print all parameters
+        print("\nFinal Chair Parameters:")
+        for attr in dir(self):
+            if not attr.startswith('_'):
+                value = getattr(self, attr)
+                if isinstance(value, (bool, int, float, str, list, tuple, np.ndarray)):
+                    print(f"{attr}: {value}")
 
     def post_init(self):
         with FixedSeed(self.factory_seed):

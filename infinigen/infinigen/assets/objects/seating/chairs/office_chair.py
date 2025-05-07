@@ -6,6 +6,8 @@
 import bpy
 import numpy as np
 from numpy.random import choice, uniform
+import json
+from pathlib import Path
 
 from infinigen.assets.material_assignments import AssetList
 from infinigen.assets.objects.seating.chairs.seats.curvy_seats import (
@@ -76,6 +78,16 @@ class OfficeChairFactory(AssetFactory):
                 self.get_material_params(leg_style)
             )
         self.params.update(self.material_params)
+
+        # Load parameters from JSON if available - after all other updates
+        params_path = Path('infinigen/assets/objects/seating/chairs/params/office/generated_chair.json')
+        if params_path.exists():
+            with open(params_path, 'r') as f:
+                params = json.load(f)
+            print(f"Loaded params: {params}")
+            # Update params with JSON values
+            self.params.update(params)
+            print(f"Updated parameters with JSON values")
 
     def get_material_params(self, leg_style):
         material_assignments = AssetList["OfficeChairFactory"](leg_style)
