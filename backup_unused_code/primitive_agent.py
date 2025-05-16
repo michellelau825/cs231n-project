@@ -6,6 +6,7 @@ from infinigen.primitive_builder.primitive_builder import ProceduralSceneBuilder
 from infinigen.primitive_builder.llm_client import LLMClient
 from infinigen.core.util import blender as butil
 from infinigen.core import init
+import openai
 
 def setup_renderer():
     """Set up Cycles renderer with GPU acceleration"""
@@ -24,6 +25,44 @@ def setup_renderer():
     
     # Configure Cycles devices
     init.configure_cycles_devices()
+
+class PrimitiveAgent:
+    def __init__(self):
+        self.client = openai.OpenAI()
+    
+    def generate_specs(self, prompt: str) -> list:
+        """Generate primitive specifications from a prompt"""
+        system_prompt = """You are a 3D modeling expert. Convert the following description into a series of primitive operations.
+        Available operations:
+        - build_prism_mesh: Creates prismatic mesh. Parameters: n (sides), r_min, r_max, height
+        - bezier_curve: Creates a curved shape. Parameters: anchors (list of [x,y,z] points), resolution
+        
+        Respond with a JSON array of operations, each containing:
+        - operation: one of the available operations
+        - params: parameters for the operation
+        - transform: optional transformation parameters (location, rotation, scale)
+        """
+        
+        try:
+            response = self.client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.1
+            )
+            
+            specs = eval(response.choices[0].message.content)
+            return specs
+            
+        except Exception as e:
+            print(f"Error generating specifications: {e}")
+            return [{
+                "operation": "build_prism_mesh",
+                "params": {"n": 4, "r_min": 0.5, "r_max": 0.5, "height": 0.1},
+                "transform": {"location": [0, 0, 0]}
+            }]
 
 def main():
     parser = argparse.ArgumentParser()

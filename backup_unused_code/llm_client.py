@@ -1,22 +1,31 @@
 import os
 from typing import Dict, Any, List, Tuple
+import bpy
+from dataclasses import dataclass
+import json
+import openai
+
+@dataclass
+class PrimitiveSpec:
+    operation: str
+    params: Dict[str, Any]
+    transform: Dict[str, Any] = None
 
 class LLMClient:
     """Client for generating scene parameters"""
     
     def __init__(self):
-        # Core asset types and their parameters
-        self.asset_types = {
-            'chair': {
-                'parameters': ['width', 'depth', 'height', 'thickness', 'back_height'],
-                'materials': ['wood', 'metal', 'plastic', 'fabric'],
-                'styles': ['modern', 'traditional', 'minimalist']
-            },
-            'table': {
-                'parameters': ['width', 'depth', 'height', 'thickness'],
-                'materials': ['wood', 'metal', 'glass', 'stone'],
-                'styles': ['modern', 'traditional', 'minimalist']
-            }
+        # Initialize OpenAI client
+        self.client = openai.OpenAI()
+        self.model = "gpt-4"
+        
+        # Core primitive operations
+        self.primitive_operations = {
+            'build_prism_mesh': 'Creates a prismatic mesh with n sides',
+            'bezier_curve': 'Creates a curved shape using bezier points',
+            'align_bezier': 'Creates an aligned bezier curve',
+            'spin': 'Creates a surface by spinning a curve',
+            'leaf': 'Creates a leaf-like shape'
         }
 
     def get_scene_parameters(self, description: str) -> Dict[str, Any]:
@@ -143,6 +152,91 @@ class LLMClient:
         except Exception as e:
             print(f"Error calling OpenAI API: {e}")
             return self.get_default_response(description)
+
+    def analyze_prompt(self, prompt: str) -> list:
+        """Convert prompt to primitive specifications"""
+        system_prompt = """You are a 3D modeling expert. Convert the following description into a series of primitive operations.
+        Available operations:
+        - build_prism_mesh: Creates prismatic mesh. Parameters: n (sides), r_min, r_max, height
+        - bezier_curve: Creates a curved shape. Parameters: anchors (list of [x,y,z] points), resolution
+        
+        Respond with a JSON array of operations, each containing:
+        - operation: one of the available operations
+        - params: parameters for the operation
+        - transform: optional transformation parameters (location, rotation, scale)
+        
+        Example response format:
+        [
+            {
+                "operation": "build_prism_mesh",
+                "params": {"n": 4, "r_min": 0.25, "r_max": 0.25, "height": 0.05},
+                "transform": {"location": [0, 0, 0.45]}
+            }
+        ]
+        """
+        
+        try:
+            response = self.client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.1
+            )
+            
+            specs = eval(response.choices[0].message.content)
+            return specs
+            
+        except Exception as e:
+            print(f"Error generating specifications: {e}")
+            return [{
+                "operation": "build_prism_mesh",
+                "params": {"n": 4, "r_min": 0.5, "r_max": 0.5, "height": 0.1},
+                "transform": {"location": [0, 0, 0]}
+            }]
+
+    def create_object(self, prompt: str) -> bpy.types.Object:
+        """Create a Blender object from the prompt"""
+        # Clear existing scene
+        bpy.ops.object.select_all(action='SELECT')
+        bpy.ops.object.delete()
+        
+        # Get primitive specifications
+        specs = self.analyze_prompt(prompt)
+        
+        # Create objects from specifications
+        components = []
+        for spec in specs:
+            if spec["operation"] == "build_prism_mesh":
+                from infinigen.assets.utils.mesh import build_prism_mesh
+                mesh = build_prism_mesh(**spec["params"])
+                obj = bpy.data.objects.new(f"component_{len(components)}", mesh)
+                bpy.context.scene.collection.objects.link(obj)
+                if spec["transform"]:
+                    obj.location = spec["transform"].get("location", (0,0,0))
+                components.append(obj)
+                
+            elif spec["operation"] == "bezier_curve":
+                from infinigen.assets.utils.draw import bezier_curve
+                curve = bezier_curve(**spec["params"])
+                components.append(curve)
+                
+            elif spec["operation"] == "align_bezier":
+                from infinigen.assets.utils.draw import align_bezier
+                curve = align_bezier(**spec["params"])
+                components.append(curve)
+        
+        # Join all components
+        if components:
+            bpy.ops.object.select_all(action='DESELECT')
+            for obj in components:
+                obj.select_set(True)
+            bpy.context.view_layer.objects.active = components[0]
+            bpy.ops.object.join()
+            return components[0]
+        
+        return None
 
 # Example usage:
 """

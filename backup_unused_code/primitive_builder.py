@@ -15,6 +15,8 @@ from infinigen.assets.utils.object import (
 from infinigen.core.util import blender as butil
 from infinigen.primitive_builder.llm_client import LLMClient
 from infinigen.core import surface
+from pathlib import Path
+from .primitive_agent import PrimitiveAgent
 
 @dataclass
 class PrimitiveSpec:
@@ -28,67 +30,57 @@ class PrimitiveBuilder:
     """Low-level builder for creating objects using primitive geometry functions"""
     
     def __init__(self):
-        self.current_obj = None
-        self.operation_history = []
+        self.agent = PrimitiveAgent()
+    
+    def build(self, prompt: str) -> bpy.types.Object:
+        """Build a 3D object from a prompt"""
+        # Get specifications from agent
+        specs = self.agent.generate_specs(prompt)
         
-    def apply_primitive(self, spec: PrimitiveSpec) -> bpy.types.Object:
-        """Apply a primitive operation based on specification"""
-        # Map operation names to functions
-        operation_map = {
-            'bezier_curve': bezier_curve,
-            'align_bezier': align_bezier,
-            'spin': spin,
-            'leaf': leaf,
-            'shape_by_angles': shape_by_angles,
-            'shape_by_xs': shape_by_xs,
-            'curve2mesh': curve2mesh,
-            'remesh_fill': remesh_fill,
-            'cut_plane': cut_plane,
-            'build_prism_mesh': build_prism_mesh,
-            'build_convex_mesh': build_convex_mesh,
-            'displace_vertices': displace_vertices,
-            'solidify': solidify,
-            'cube': new_cube,
-            'cylinder': new_cylinder,
-            'plane': new_plane,
-            'empty': new_empty
-        }
+        # Create components
+        components = []
+        for spec in specs:
+            op = spec["operation"]
+            params = spec["params"]
+            transform = spec.get("transform", {})
+            
+            # Create the base object
+            if op == "build_prism_mesh":
+                from infinigen.assets.utils.draw import build_prism_mesh
+                mesh = build_prism_mesh(**params)
+                obj = bpy.data.objects.new(f"component_{len(components)}", mesh)
+                bpy.context.scene.collection.objects.link(obj)
+                
+            elif op == "bezier_curve":
+                from infinigen.assets.utils.draw import bezier_curve
+                obj = bezier_curve(**params)
+            
+            # Apply transformations
+            if transform:
+                if "location" in transform:
+                    obj.location = transform["location"]
+                if "rotation" in transform:
+                    obj.rotation_euler = transform["rotation"]
+                if "scale" in transform:
+                    obj.scale = transform["scale"]
+            
+            components.append(obj)
         
-        # Get the operation function
-        if spec.operation not in operation_map:
-            raise ValueError(f"Unknown primitive operation: {spec.operation}")
+        # Join all components
+        if components:
+            bpy.ops.object.select_all(action='DESELECT')
+            for obj in components:
+                obj.select_set(True)
+            bpy.context.view_layer.objects.active = components[0]
+            bpy.ops.object.join()
+            return components[0]
         
-        operation_func = operation_map[spec.operation]
-        
-        # Apply the operation
-        if spec.operation in ['bezier_curve', 'align_bezier', 'spin', 'leaf', 'build_prism_mesh', 'build_convex_mesh', 'cube', 'cylinder', 'plane', 'empty']:
-            # These operations create new objects
-            self.current_obj = operation_func(**spec.params)
-        else:
-            # These operations modify existing objects
-            if self.current_obj is None:
-                raise ValueError("No current object to modify")
-            self.current_obj = operation_func(self.current_obj, **spec.params)
-        
-        # Apply transformations if specified
-        if spec.transform:
-            if 'location' in spec.transform:
-                self.current_obj.location = spec.transform['location']
-            if 'rotation' in spec.transform:
-                self.current_obj.rotation_euler = spec.transform['rotation']
-            if 'scale' in spec.transform:
-                self.current_obj.scale = spec.transform['scale']
-            butil.apply_transform(self.current_obj)
-        
-        # Apply material if specified
-        if spec.material:
-            # TODO: Implement material application
-            pass
-        
-        # Record the operation
-        self.operation_history.append(spec)
-        
-        return self.current_obj
+        return None
+    
+    def save(self, obj: bpy.types.Object, output_path: Path):
+        """Save the object to a .blend file"""
+        output_path.parent.mkdir(exist_ok=True)
+        bpy.ops.wm.save_as_mainfile(filepath=str(output_path))
 
 class LLMInterpreter:
     """Interprets natural language descriptions into primitive specifications"""
