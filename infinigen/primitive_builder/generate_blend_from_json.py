@@ -51,7 +51,12 @@ def main():
             if "scale" in transform:
                 obj.scale = transform["scale"]
 
-    out_path = Path(json_path).with_suffix('.blend')
+    # Create desktop/generated-assets folder if it doesn't exist
+    desktop_path = Path.home() / "Desktop" / "generated-assets"
+    desktop_path.mkdir(exist_ok=True)
+
+    # Save .blend file to desktop/generated-assets using Path.with_suffix()
+    out_path = desktop_path / Path(json_path).with_suffix('.blend').name
     bpy.ops.wm.save_as_mainfile(filepath=str(out_path))
     print(f"Saved: {out_path}")
 

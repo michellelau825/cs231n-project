@@ -1,6 +1,7 @@
 import sys
 import json
 import openai
+from pathlib import Path
 
 def main():
     if len(sys.argv) < 2:
@@ -27,9 +28,16 @@ def main():
         temperature=0.1
     )
     content = response.choices[0].message.content
-    with open("primitives.json", "w") as f:
+
+    # Create desktop/generated-assets folder if it doesn't exist
+    desktop_path = Path.home() / "Desktop" / "generated-assets"
+    desktop_path.mkdir(exist_ok=True)
+
+    # Save primitives.json to desktop/generated-assets
+    output_path = desktop_path / "primitives.json"
+    with open(output_path, "w") as f:
         f.write(content)
-    print("Primitive specs written to primitives.json")
+    print(f"Primitive specs written to {output_path}")
 
 if __name__ == "__main__":
     main() 
