@@ -4,7 +4,6 @@
 
 # Authors: Lingjie Mei
 
-
 import bmesh
 import bpy
 import numpy as np
@@ -413,3 +412,262 @@ def prepare_for_boolean(obj):
     with butil.ViewportMode(obj, "EDIT"), butil.Suppress():
         bpy.ops.mesh.select_all(action="SELECT")
         bpy.ops.mesh.remove_doubles()
+
+
+def build_cylinder_mesh(radius=1.0, height=2.0, segments=32):
+    """
+    Create a cylinder mesh.
+
+    Parameters
+    ----------
+    radius : float
+        The radius of the cylinder base.
+    height : float
+        The height of the cylinder.
+    segments : int
+        Number of segments around the circumference.
+
+    Returns
+    -------
+    bpy.types.Mesh
+        The generated cylinder mesh.
+
+    Example
+    -------
+    mesh = build_cylinder_mesh(radius=0.5, height=1.5, segments=24)
+    """
+    import bpy
+    from math import pi, cos, sin
+    verts = []
+    faces = []
+    for i in range(segments):
+        angle = 2 * pi * i / segments
+        x = radius * cos(angle)
+        y = radius * sin(angle)
+        verts.append((x, y, -height / 2))
+        verts.append((x, y, height / 2))
+    # Side faces
+    for i in range(segments):
+        next_i = (i + 1) % segments
+        faces.append([i * 2, next_i * 2, next_i * 2 + 1, i * 2 + 1])
+    # Bottom face
+    bottom = [i * 2 for i in range(segments)]
+    faces.append(bottom[::-1])
+    # Top face
+    top = [i * 2 + 1 for i in range(segments)]
+    faces.append(top)
+    mesh = bpy.data.meshes.new("cylinder")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    return mesh
+
+
+def build_cone_mesh(radius=1.0, height=2.0, segments=32):
+    """
+    Create a cone mesh.
+
+    Parameters
+    ----------
+    radius : float
+        The radius of the cone base.
+    height : float
+        The height of the cone.
+    segments : int
+        Number of segments around the circumference.
+
+    Returns
+    -------
+    bpy.types.Mesh
+        The generated cone mesh.
+
+    Example
+    -------
+    mesh = build_cone_mesh(radius=1.0, height=2.0, segments=32)
+    """
+    import bpy
+    from math import pi, cos, sin
+    verts = [(0, 0, height / 2)]  # tip
+    for i in range(segments):
+        angle = 2 * pi * i / segments
+        x = radius * cos(angle)
+        y = radius * sin(angle)
+        verts.append((x, y, -height / 2))
+    # Side faces
+    faces = [[0, i + 1, ((i + 1) % segments) + 1] for i in range(segments)]
+    # Base face
+    base = [i + 1 for i in range(segments)]
+    faces.append(base[::-1])
+    mesh = bpy.data.meshes.new("cone")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    return mesh
+
+
+def build_sphere_mesh(radius=1.0, segments=32, rings=16):
+    """
+    Create a UV sphere mesh.
+
+    Parameters
+    ----------
+    radius : float
+        The radius of the sphere.
+    segments : int
+        Number of segments (longitude).
+    rings : int
+        Number of rings (latitude).
+
+    Returns
+    -------
+    bpy.types.Mesh
+        The generated sphere mesh.
+
+    Example
+    -------
+    mesh = build_sphere_mesh(radius=1.0, segments=32, rings=16)
+    """
+    import bpy
+    from math import pi, sin, cos
+    verts = []
+    faces = []
+    for r in range(rings + 1):
+        phi = pi * r / rings
+        for s in range(segments):
+            theta = 2 * pi * s / segments
+            x = radius * sin(phi) * cos(theta)
+            y = radius * sin(phi) * sin(theta)
+            z = radius * cos(phi)
+            verts.append((x, y, z))
+    for r in range(rings):
+        for s in range(segments):
+            next_s = (s + 1) % segments
+            a = r * segments + s
+            b = r * segments + next_s
+            c = (r + 1) * segments + next_s
+            d = (r + 1) * segments + s
+            if r != 0:
+                faces.append([a, b, c, d])
+            else:
+                faces.append([a, b, c])
+    mesh = bpy.data.meshes.new("sphere")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    return mesh
+
+
+def build_torus_mesh(major_radius=1.0, minor_radius=0.25, major_segments=32, minor_segments=16):
+    """
+    Create a torus mesh.
+
+    Parameters
+    ----------
+    major_radius : float
+        The radius from the center of the torus to the center of the tube.
+    minor_radius : float
+        The radius of the tube.
+    major_segments : int
+        Number of segments around the main ring.
+    minor_segments : int
+        Number of segments around the tube.
+
+    Returns
+    -------
+    bpy.types.Mesh
+        The generated torus mesh.
+
+    Example
+    -------
+    mesh = build_torus_mesh(major_radius=1.0, minor_radius=0.25, major_segments=32, minor_segments=16)
+    """
+    import bpy
+    from math import pi, cos, sin
+    verts = []
+    faces = []
+    for i in range(major_segments):
+        theta = 2 * pi * i / major_segments
+        for j in range(minor_segments):
+            phi = 2 * pi * j / minor_segments
+            x = (major_radius + minor_radius * cos(phi)) * cos(theta)
+            y = (major_radius + minor_radius * cos(phi)) * sin(theta)
+            z = minor_radius * sin(phi)
+            verts.append((x, y, z))
+    for i in range(major_segments):
+        for j in range(minor_segments):
+            next_i = (i + 1) % major_segments
+            next_j = (j + 1) % minor_segments
+            a = i * minor_segments + j
+            b = next_i * minor_segments + j
+            c = next_i * minor_segments + next_j
+            d = i * minor_segments + next_j
+            faces.append([a, b, c, d])
+    mesh = bpy.data.meshes.new("torus")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    return mesh
+
+
+def build_box_mesh(width=1.0, depth=1.0, height=1.0):
+    """
+    Create a box (cuboid) mesh.
+
+    Parameters
+    ----------
+    width : float
+        The width of the box (X axis).
+    depth : float
+        The depth of the box (Y axis).
+    height : float
+        The height of the box (Z axis).
+
+    Returns
+    -------
+    bpy.types.Mesh
+        The generated box mesh.
+
+    Example
+    -------
+    mesh = build_box_mesh(width=1.0, depth=2.0, height=0.5)
+    """
+    import bpy
+    w, d, h = width / 2, depth / 2, height / 2
+    verts = [
+        (-w, -d, -h), (w, -d, -h), (w, d, -h), (-w, d, -h),
+        (-w, -d, h), (w, -d, h), (w, d, h), (-w, d, h)
+    ]
+    faces = [
+        [0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4],
+        [2, 3, 7, 6], [1, 2, 6, 5], [0, 3, 7, 4]
+    ]
+    mesh = bpy.data.meshes.new("box")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    return mesh
+
+
+def build_plane_mesh(width=1.0, depth=1.0):
+    """
+    Create a flat plane mesh.
+
+    Parameters
+    ----------
+    width : float
+        The width of the plane (X axis).
+    depth : float
+        The depth of the plane (Y axis).
+
+    Returns
+    -------
+    bpy.types.Mesh
+        The generated plane mesh.
+
+    Example
+    -------
+    mesh = build_plane_mesh(width=2.0, depth=2.0)
+    """
+    import bpy
+    w, d = width / 2, depth / 2
+    verts = [(-w, -d, 0), (w, -d, 0), (w, d, 0), (-w, d, 0)]
+    faces = [[0, 1, 2, 3]]
+    mesh = bpy.data.meshes.new("plane")
+    mesh.from_pydata(verts, [], faces)
+    mesh.update()
+    return mesh
