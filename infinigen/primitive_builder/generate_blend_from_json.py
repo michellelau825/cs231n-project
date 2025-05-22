@@ -249,43 +249,24 @@ def main():
     for i, spec in enumerate(specs):
         op = spec["operation"]
         params = spec["params"]
-        transform = spec.get("transform", {})
-        obj = None
-
-        # Try to get the primitive function from either our simplified mesh utils or draw_utils
-        primitive_func = None
-        if op in globals():
-            primitive_func = globals()[op]
-        elif hasattr(draw_utils, op):
-            primitive_func = getattr(draw_utils, op)
         
-        if primitive_func is None:
-            print(f"Warning: Unknown primitive operation '{op}', skipping...")
-            continue
-
         try:
-            # Call the primitive function with the provided parameters
-            result = primitive_func(**params)
-            
-            # Handle the result based on its type
-            if isinstance(result, bpy.types.Mesh):
-                obj = add_mesh_to_scene(result, name=f"{op}_{i}")
-            elif isinstance(result, bpy.types.Object):
-                obj = result
-                if obj.name not in bpy.context.collection.objects:
-                    bpy.context.collection.objects.link(obj)
+            # Execute the Blender primitive operation
+            if op.startswith("bpy.ops.mesh.primitive_"):
+                # Convert params to keyword arguments
+                kwargs = {}
+                for key, value in params.items():
+                    if key in ["location", "rotation", "scale"]:
+                        kwargs[key] = tuple(value)
+                    else:
+                        kwargs[key] = value
+                
+                # Execute the operation
+                eval(f"{op}(**kwargs)")
+                print(f"Created {op} with params: {params}")
             else:
-                print(f"Warning: {op} returned unexpected type {type(result)}, skipping...")
+                print(f"Warning: Unknown primitive operation '{op}', skipping...")
                 continue
-
-            # Apply transformations if specified
-            if transform:
-                if "location" in transform:
-                    obj.location = transform["location"]
-                if "rotation" in transform:
-                    obj.rotation_euler = transform["rotation"]
-                if "scale" in transform:
-                    obj.scale = transform["scale"]
 
         except Exception as e:
             print(f"Error creating {op}: {str(e)}")

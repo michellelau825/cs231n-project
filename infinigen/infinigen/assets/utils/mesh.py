@@ -7,11 +7,19 @@
 import bmesh
 import bpy
 import numpy as np
-import shapely
 import trimesh
 from mathutils import Vector
 from numpy.random import normal, uniform
-from shapely import LineString
+
+# Try different ways to import shapely
+try:
+    from shapely.geometry import LineString
+except ImportError:
+    try:
+        from shapely import LineString
+    except ImportError:
+        print("Warning: shapely not found, some functionality may be limited")
+        LineString = None
 
 from infinigen.assets.utils.decorate import (
     read_co,
