@@ -23,6 +23,7 @@ if user_site.exists():
 import json
 import bpy
 import numpy as np
+from infinigen.core.util import blender as butil
 
 # Print diagnostic information
 print("Python executable:", sys.executable)
@@ -228,6 +229,67 @@ def add_mesh_to_scene(mesh, name="primitive_obj"):
     bpy.context.view_layer.objects.active = obj
     return obj
 
+def get_operation_function(op_name):
+    """Get the function for an operation, handling module prefixes"""
+    # Remove module prefix if present
+    if '.' in op_name:
+        module_name, func_name = op_name.rsplit('.', 1)
+    else:
+        func_name = op_name
+
+    # Try to get the function from globals first
+    if func_name in globals():
+        return globals()[func_name]
+    
+    # Try to get from draw_utils
+    if hasattr(draw_utils, func_name):
+        return getattr(draw_utils, func_name)
+    
+    # Try to get from bpy.ops
+    if op_name.startswith('bpy.ops.'):
+        parts = op_name.split('.')
+        op = bpy.ops
+        for part in parts[1:]:
+            op = getattr(op, part)
+        return op
+    
+    raise ValueError(f"Unknown operation: {op_name}")
+
+def apply_transform(obj, transform):
+    """Apply transformation to an object"""
+    if 'location' in transform:
+        obj.location = transform['location']
+    if 'rotation' in transform:
+        obj.rotation_euler = transform['rotation']
+    if 'scale' in transform:
+        obj.scale = transform['scale']
+
+def apply_material(obj, material_info):
+    """Apply material to an object"""
+    if not material_info:
+        return
+
+    try:
+        # Parse the material path
+        *module_parts, function_name = material_info['path'].split('.')
+        module_path = '.'.join(module_parts)
+        
+        # Import the material module
+        material_module = __import__(module_path, fromlist=[function_name])
+        material_function = getattr(material_module, function_name)
+        
+        # Create material
+        material = material_function(**material_info.get('params', {}))
+        
+        # Apply to object
+        if obj.data.materials:
+            obj.data.materials[0] = material
+        else:
+            obj.data.materials.append(material)
+            
+    except Exception as e:
+        print(f"Error applying material: {e}")
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: blender --background --python generate_blend_from_json.py -- <primitives.json>")
@@ -247,6 +309,7 @@ def main():
     bpy.ops.object.delete()
 
     for i, spec in enumerate(specs):
+<<<<<<< Updated upstream
         op = spec["operation"]
         params = spec["params"]
         
@@ -271,13 +334,41 @@ def main():
         except Exception as e:
             print(f"Error creating {op}: {str(e)}")
             continue
+=======
+        print(f"\nProcessing component: {spec['name']}")
+        for j, op_spec in enumerate(spec['operations']):
+            try:
+                print(f"  Operation {j+1}: {op_spec['operation']}")
+                op_func = get_operation_function(op_spec['operation'])
+                
+                # Call the operation function
+                result = op_func(**op_spec.get('params', {}))
+                
+                # Handle the result
+                if isinstance(result, bpy.types.Mesh):
+                    obj = add_mesh_to_scene(result, name=f"{spec['name']}_{i}_{j}")
+                elif isinstance(result, bpy.types.Object):
+                    obj = result
+                else:
+                    continue  # Skip if no object was created
+                
+                # Apply transformations
+                if 'transform' in op_spec:
+                    apply_transform(obj, op_spec['transform'])
+                
+            except Exception as e:
+                print(f"  Error in operation {j+1}: {e}")
+                continue
+        
+        # Apply material to the last created object
+        if 'material' in spec:
+            apply_material(obj, spec['material'])
+>>>>>>> Stashed changes
 
     # Save the result
-    desktop_path = Path.home() / "Desktop" / "generated-assets"
-    desktop_path.mkdir(exist_ok=True)
-    out_path = desktop_path / Path(json_path).with_suffix('.blend').name
-    bpy.ops.wm.save_as_mainfile(filepath=str(out_path))
-    print(f"Saved: {out_path}")
+    blend_path = Path(json_path).with_suffix('.blend')
+    bpy.ops.wm.save_as_mainfile(filepath=str(blend_path))
+    print(f"\nSaved Blender file to: {blend_path}")
 
 if __name__ == "__main__":
     main() 

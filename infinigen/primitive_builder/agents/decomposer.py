@@ -72,31 +72,23 @@ Avoid mentioning colors, materials, or textures unless specifically relevant to 
         try:
             print("\nSending prompt to GPT-4...")
             response = self.client.chat.completions.create(
-                model="gpt-4-0125-preview",
+                model="gpt-4-1106-preview",
                 messages=[
                     {"role": "system", "content": system_prompt + "\nIMPORTANT: Output ONLY valid JSON with no additional text."},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.2,
-                response_format={"type": "json_object"}  # Force JSON response
+                temperature=0.1
             )
             
             print("\nGPT-4 Response received. Attempting to parse JSON...")
-            content = response.choices[0].message.content
+            content = response.choices[0].message.content.strip()
             print(f"\nRaw response:\n{content}")
             
             try:
-                # Find the first '{' and last '}'
-                start_idx = content.find('{')
-                end_idx = content.rfind('}')
-                if start_idx != -1 and end_idx != -1:
-                    content = content[start_idx:end_idx + 1]
-                    print("\nExtracted JSON content:")
-                    print(content)
-                
-                parsed = json.loads(content)
+                # Try to extract JSON from the response
+                components = json.loads(content)
                 print("\nJSON parsed successfully!")
-                return parsed
+                return components
                 
             except json.JSONDecodeError as je:
                 print(f"\nJSON parsing error: {str(je)}")
