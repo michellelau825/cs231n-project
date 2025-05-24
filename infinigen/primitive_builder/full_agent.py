@@ -6,11 +6,7 @@ from typing import Optional, Dict, List
 import argparse
 import json
 import subprocess
-<<<<<<< Updated upstream
-from importlib import import_module
-=======
 from datetime import datetime
->>>>>>> Stashed changes
 
 # Add project root to path
 project_root = Path(__file__).parent.parent
@@ -52,64 +48,6 @@ class FurnitureGenerator:
         print("\n3. Generating Primitive Specifications...")
         primitive_specs = self.primitive_gen.generate(components)
         
-<<<<<<< Updated upstream
-        # Convert to the expected format
-        formatted_specs = []
-        for component in primitive_specs:
-            if isinstance(component, dict) and "operations" in component:
-                for op in component["operations"]:
-                    if isinstance(op, dict) and "operation" in op:
-                        # Convert mesh.build_cylinder_mesh to build_cylinder_mesh
-                        op_name = op["operation"].split(".")[-1]
-                        formatted_specs.append({
-                            "operation": op_name,
-                            "params": op.get("params", {}),
-                            "transform": op.get("transform", {})
-                        })
-        
-        print("Generated Specifications:")
-        print(json.dumps(formatted_specs, indent=2))
-        
-        # Step 4: Save JSON file
-        print("\n4. Saving JSON file...")
-        output_path = Path(self.output_path).expanduser() if self.output_path else Path.home() / "Desktop" / "generated-assets" / "primitives.json"
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        
-        print(f"Debug - formatted_specs before saving: {formatted_specs}")
-        print(f"Debug - formatted_specs type: {type(formatted_specs)}")
-        print(f"Debug - formatted_specs length: {len(formatted_specs)}")
-        
-        try:
-            with open(output_path, 'w') as f:
-                json.dump(formatted_specs, f, indent=2)
-            print(f"Debug - File size after writing: {output_path.stat().st_size} bytes")
-        except Exception as e:
-            print(f"Debug - Error writing file: {str(e)}")
-        
-        print(f"JSON file saved at: {output_path}")
-        
-        # Step 5: Generate Blender file
-        print("\n5. Generating Blender file...")
-        blend_script = project_root / "primitive_builder" / "generate_blend_from_json.py"
-        blend_cmd = [
-            "blender",
-            "--background",
-            "--python",
-            str(blend_script),
-            "--",
-            str(output_path)
-        ]
-        
-        try:
-            subprocess.run(blend_cmd, check=True)
-            print(f"✓ Blender file generated successfully")
-        except subprocess.CalledProcessError as e:
-            print(f"✗ Error generating Blender file: {e}")
-            return None
-        
-        print("\n=== Generation Complete ===")
-        return str(output_path)
-=======
         # Create output directory with timestamp
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         output_dir = Path(self.output_path).expanduser() if self.output_path else Path.home() / "Desktop" / "generated-assets"
@@ -126,7 +64,6 @@ class FurnitureGenerator:
         print(f"\nJSON specifications saved to: {json_path}")
         
         return json_path
->>>>>>> Stashed changes
 
 def generate_blend_file(json_path: Path) -> Optional[Path]:
     """Generate Blender file from JSON specifications"""
@@ -134,7 +71,6 @@ def generate_blend_file(json_path: Path) -> Optional[Path]:
         # Find Blender executable
         blender_path = find_blender()
         if not blender_path:
-            print("Error: Could not find Blender executable")
             return None
 
         # Construct the command
@@ -199,26 +135,15 @@ def find_blender() -> Optional[Path]:
 def main():
     parser = argparse.ArgumentParser(description='Generate 3D furniture from text description')
     parser.add_argument('prompt', type=str, help='Description of the furniture to generate')
-<<<<<<< Updated upstream
-    parser.add_argument('--output', type=str, help='Output path for the JSON file', default=None)
-=======
     parser.add_argument('--output', type=str, help='Output path for the files', default=None)
     parser.add_argument('--json-only', action='store_true', help='Only generate JSON file, skip Blender file generation')
->>>>>>> Stashed changes
     args = parser.parse_args()
 
     api_key = os.getenv('OPENAI_API_KEY')
     if not api_key:
-        print("Error: OPENAI_API_KEY environment variable not set")
         sys.exit(1)
 
     generator = FurnitureGenerator(api_key, args.output)
-<<<<<<< Updated upstream
-    output_path = generator.generate(args.prompt)
-    
-    if output_path:
-        print(f"Generated files at: {output_path}")
-=======
     json_path = generator.generate_json(args.prompt)
     
     if json_path:
@@ -232,7 +157,6 @@ def main():
         print("\nGeneration Complete!")
     else:
         print("\nGeneration Failed!")
->>>>>>> Stashed changes
 
 if __name__ == "__main__":
     main() 
