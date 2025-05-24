@@ -4,7 +4,10 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import logging
 from .materials_agent import MaterialsAgent
+
+logger = logging.getLogger(__name__)
 
 class DecomposedPrimitiveGenerator:
     """An agent that generates primitive operations through semantic decomposition."""
@@ -12,6 +15,7 @@ class DecomposedPrimitiveGenerator:
     def __init__(self, api_key: str):
         self.client = openai.OpenAI(api_key=api_key)
         self.materials_agent = MaterialsAgent(api_key)
+        logger.info("DecomposedPrimitiveGenerator initialized")
     
     def generate_primitives(self, prompt: str) -> List[Dict[str, Any]]:
         """Generate primitive operations directly from text description"""
@@ -67,16 +71,17 @@ class DecomposedPrimitiveGenerator:
 
         try:
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model="gpt-4-1106-preview",  # Using the preview model that supports JSON response format
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.1
+                temperature=0.1,
+                response_format={"type": "json_object"}
             )
             
             content = response.choices[0].message.content
-            print(f"Debug - Raw response content: {content}")
+            logger.debug(f"Raw response content: {content}")
             
             # Parse the response as JSON
             try:
@@ -86,43 +91,42 @@ class DecomposedPrimitiveGenerator:
                 elif isinstance(operations, dict) and "operations" in operations:
                     return operations["operations"]
                 else:
-                    print(f"Error: Unexpected response format: {type(operations)}")
+                    logger.error(f"Unexpected response format: {type(operations)}")
                     return []
             except json.JSONDecodeError as e:
-                print(f"Error parsing JSON response: {e}")
-                print(f"Raw content: {content}")
+                logger.error(f"Error parsing JSON response: {e}")
+                logger.error(f"Raw content: {content}")
                 return []
                 
         except Exception as e:
-            print(f"Error in primitive generation: {e}")
+            logger.error(f"Error in primitive generation: {e}")
             return []
 
     def generate(self, prompt: str, output_path: str = None) -> Tuple[str, str]:
         """Main generation pipeline"""
-        print("\n=== Starting Generation Pipeline ===")
-        print(f"Input Prompt: '{prompt}'")
-
+        logger.info("\n=== Starting Generation Pipeline ===")
+        logger.info(f"Input Prompt: '{prompt}'")
 
         # Step 2: Generate Primitive Operations
-        print("\n2. Generating Primitive Specifications...")
+        logger.info("\n2. Generating Primitive Specifications...")
         primitive_specs = self.generate_primitives(prompt)
         if not primitive_specs:
-            print("Error: No primitive specifications generated")
+            logger.error("Error: No primitive specifications generated")
             return None, None
             
-        print("Generated Specifications:")
-        print(json.dumps(primitive_specs, indent=2))
+        logger.info("Generated Specifications:")
+        logger.info(json.dumps(primitive_specs, indent=2))
         
         # Step 3: Assign Materials
-        print("\n3. Assigning Materials...")
+        logger.info("\n3. Assigning Materials...")
         components_with_materials = self.materials_agent.assign_materials(primitive_specs)
         
         if not components_with_materials:
-            print("\nError: No components generated")
+            logger.error("\nError: No components generated")
             return None, None
 
         # Step 4: Save JSON file
-        print("\n4. Saving JSON file...")
+        logger.info("\n4. Saving JSON file...")
         if output_path:
             json_path = Path(output_path).expanduser()
         else:
@@ -133,13 +137,13 @@ class DecomposedPrimitiveGenerator:
         try:
             with open(json_path, 'w') as f:
                 json.dump(components_with_materials, f, indent=2)
-            print(f"JSON file saved at: {json_path}")
+            logger.info(f"JSON file saved at: {json_path}")
         except Exception as e:
-            print(f"Error saving JSON file: {e}")
+            logger.error(f"Error saving JSON file: {e}")
             return None, None
 
         # Step 5: Generate Blender file
-        print("\n5. Generating Blender file...")
+        logger.info("\n5. Generating Blender file...")
         try:
             # Get the project root directory
             project_root = Path(__file__).parent.parent.parent
@@ -161,13 +165,13 @@ class DecomposedPrimitiveGenerator:
             
             # Get the output blend file path
             blend_path = json_path.with_suffix('.blend')
-            print(f"✓ Blender file generated at: {blend_path}")
+            logger.info(f"✓ Blender file generated at: {blend_path}")
             
             return str(json_path), str(blend_path)
             
         except subprocess.CalledProcessError as e:
-            print(f"Error generating Blender file: {e}")
+            logger.error(f"Error generating Blender file: {e}")
             return str(json_path), None
         except Exception as e:
-            print(f"Unexpected error during Blender generation: {e}")
+            logger.error(f"Unexpected error during Blender generation: {e}")
             return str(json_path), None 

@@ -1,0 +1,647 @@
+2025-05-23 23:58:53,036 - trimesh - DEBUG - searching for blender in: /sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Users/eyrinkim/.vscode/extensions/ms-python.debugpy-2025.6.0-darwin-arm64/bundled/scripts/noConfigScripts:/usr/sbin:/Applications/blender.app/Contents/MacOS:/Users/eyrinkim/opt/miniconda3/condabin:/opt/homebrew/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/usr/bin:/Applications/Blender.app/Contents/MacOS:/usr/local/bin:/Users/eyrinkim/.nvm/versions/node/v22.14.0/bin:/bin:/Users/eyrinkim/opt/miniconda3/envs/infinigen/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/Applications/Blender/blender.app/Contents/MacOS:/Users/eyrinkim/Library/Application Support/Cursor/User/globalStorage/github.copilot-chat/debugCommand:/System/Cryptexes/App/usr/bin:/Library/Frameworks/Python.framework/Versions/3.12/bin:/Library/Frameworks/Python.framework/Versions/3.13/bin
+2025-05-23 23:58:53,038 - trimesh - DEBUG - falling back to hashlib hashing: `pip install xxhash`for 50x faster cache checks
+2025-05-23 23:58:53,513 - matplotlib - DEBUG - matplotlib data path: /Users/eyrinkim/opt/miniconda3/envs/infinigen/lib/python3.11/site-packages/matplotlib/mpl-data
+2025-05-23 23:58:53,516 - matplotlib - DEBUG - CONFIGDIR=/Users/eyrinkim/.matplotlib
+2025-05-23 23:58:53,517 - matplotlib - DEBUG - interactive is False
+2025-05-23 23:58:53,517 - matplotlib - DEBUG - platform is darwin
+2025-05-23 23:58:53,635 - __main__ - INFO - Python executable: /Applications/Blender.app/Contents/Resources/4.4/python/bin/python3.11
+2025-05-23 23:58:53,636 - __main__ - INFO - Python version: 3.11.11 (main, Feb  7 2025, 22:56:22) [Clang 16.0.0 (clang-1600.0.26.6)]
+2025-05-23 23:58:53,636 - __main__ - INFO - Python path: ['/Applications/Blender.app/Contents/Resources/4.4/scripts/startup', '/Applications/Blender.app/Contents/Resources/4.4/scripts/modules', '/Applications/Blender.app/Contents/Resources/4.4/python/lib/python311.zip', '/Applications/Blender.app/Contents/Resources/4.4/python/lib/python3.11', '/Applications/Blender.app/Contents/Resources/4.4/python/lib/python3.11/lib-dynload', '/Applications/Blender.app/Contents/Resources/4.4/python/lib/python3.11/site-packages', '/Applications/Blender.app/Contents/Resources/4.4/scripts/freestyle/modules', '/Users/eyrinkim/Library/Application Support/Blender/4.4/scripts/addons/modules', '/Applications/Blender.app/Contents/Resources/4.4/scripts/addons_core', '/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen', '/Users/eyrinkim/opt/miniconda3/envs/infinigen/lib/python3.11/site-packages', '/Users/eyrinkim/.local/lib/python3.11/site-packages']
+2025-05-23 23:58:53,636 - __main__ - INFO - Scipy version: 1.15.3
+2025-05-23 23:58:53,636 - __main__ - INFO - Scipy location: /Users/eyrinkim/.local/lib/python3.11/site-packages/scipy/__init__.py
+2025-05-23 23:58:53,696 - matplotlib - DEBUG - CACHEDIR=/Users/eyrinkim/.matplotlib
+2025-05-23 23:58:53,698 - matplotlib.font_manager - DEBUG - Using fontManager instance from /Users/eyrinkim/.matplotlib/fontlist-v390.json
+2025-05-23 23:58:54,364 - OpenGL.acceleratesupport - INFO - No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+2025-05-23 23:58:54,451 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_ATTACHED_OBJECTS_ARB
+2025-05-23 23:58:54,451 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_DELETE_STATUS_ARB
+2025-05-23 23:58:54,451 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_INFO_LOG_LENGTH_ARB
+2025-05-23 23:58:54,451 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_SHADER_SOURCE_LENGTH_ARB
+2025-05-23 23:58:54,451 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_SUBTYPE_ARB
+2025-05-23 23:58:54,451 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_VALIDATE_STATUS_ARB
+2025-05-23 23:58:54,451 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_PROGRAM_OBJECT_ARB
+2025-05-23 23:58:54,451 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_SHADER_OBJECT_ARB
+2025-05-23 23:58:54,451 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GLhalfARB
+2025-05-23 23:58:54,451 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glAttachObjectARB
+2025-05-23 23:58:54,451 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glDeleteObjectARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glDetachObjectARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetAttachedObjectsARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetHandleARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetInfoLogARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetObjectParameterfvARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetObjectParameterivARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glInitShaderObjectsARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.fragment_shader.GLhalfARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.fragment_shader.glInitFragmentShaderARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.GL_OBJECT_ACTIVE_ATTRIBUTES_ARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.GL_OBJECT_ACTIVE_ATTRIBUTE_MAX_LENGTH_ARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.GLhalfARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.base_glGetActiveAttribARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.glGetObjectParameterivARB
+2025-05-23 23:58:54,452 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.glInitVertexShaderARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_CURRENT_MATRIX_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_CURRENT_MATRIX_STACK_DEPTH_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX0_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX10_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX11_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX12_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX13_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX14_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX15_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX16_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX17_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX18_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX19_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX1_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX20_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX21_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX22_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX23_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX24_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX25_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX26_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX27_ARB
+2025-05-23 23:58:54,453 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX28_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX29_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX2_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX30_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX31_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX3_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX4_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX5_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX6_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX7_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX8_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX9_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_ADDRESS_REGISTERS_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_ATTRIBS_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_ENV_PARAMETERS_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_INSTRUCTIONS_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_LOCAL_PARAMETERS_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_MATRICES_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_MATRIX_STACK_DEPTH_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_ATTRIBS_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_INSTRUCTIONS_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_PARAMETERS_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_TEMPORARIES_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_PARAMETERS_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_TEMPORARIES_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_ADDRESS_REGISTERS_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_ATTRIBS_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_BINDING_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_ERROR_POSITION_ARB
+2025-05-23 23:58:54,454 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_ERROR_STRING_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_FORMAT_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_FORMAT_ASCII_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_INSTRUCTIONS_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_LENGTH_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_ATTRIBS_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_INSTRUCTIONS_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_PARAMETERS_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_TEMPORARIES_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_PARAMETERS_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_STRING_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_TEMPORARIES_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_UNDER_NATIVE_LIMITS_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_TRANSPOSE_CURRENT_MATRIX_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_VERTEX_PROGRAM_ARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GLhalfARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glBindProgramARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glDeleteProgramsARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGenProgramsARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramEnvParameterdvARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramEnvParameterfvARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramLocalParameterdvARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramLocalParameterfvARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramStringARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramivARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glInitVertexProgramARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramEnvParameter4dARB
+2025-05-23 23:58:54,455 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramEnvParameter4dvARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramEnvParameter4fARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramEnvParameter4fvARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramLocalParameter4dARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramLocalParameter4dvARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramLocalParameter4fARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramLocalParameter4fvARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramStringARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.GL_FRAMEBUFFER_INCOMPLETE_LAYER_COUNT_ARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.GL_MAX_GEOMETRY_VARYING_COMPONENTS_ARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.GL_MAX_VERTEX_VARYING_COMPONENTS_ARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.GLhalfARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.glFramebufferTextureFaceARB
+2025-05-23 23:58:54,456 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.glInitGeometryShader4ARB
+2025-05-23 23:58:54,622 - infinigen.core.init - INFO - Addon antlandscape already in blender local addons, attempt to enable it.
+2025-05-23 23:58:54,642 - __main__ - INFO - Successfully loaded JSON specifications
+2025-05-23 23:58:54,643 - __main__ - INFO - Cleared existing objects from scene
+2025-05-23 23:58:54,643 - __main__ - INFO - 
+Processing component: Seat
+2025-05-23 23:58:54,643 - __main__ - INFO -   Operation 1: mesh.build_sphere_mesh
+2025-05-23 23:58:54,643 - __main__ - ERROR -   Error in operation 1: Unknown operation: mesh.build_sphere_mesh
+2025-05-23 23:58:54,643 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 343, in main
+    op_func = get_operation_function(op_spec['operation'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 269, in get_operation_function
+    raise ValueError(f"Unknown operation: {op_name}")
+ValueError: Unknown operation: mesh.build_sphere_mesh
+
+2025-05-23 23:58:54,643 - __main__ - INFO -   Operation 2: mesh.dissolve_limited
+2025-05-23 23:58:54,643 - __main__ - ERROR -   Error in operation 2: Unknown operation: mesh.dissolve_limited
+2025-05-23 23:58:54,643 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 343, in main
+    op_func = get_operation_function(op_spec['operation'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 269, in get_operation_function
+    raise ValueError(f"Unknown operation: {op_name}")
+ValueError: Unknown operation: mesh.dissolve_limited
+
+2025-05-23 23:58:54,643 - __main__ - INFO -   Operation 3: mesh.recalc_normals
+2025-05-23 23:58:54,643 - __main__ - ERROR -   Error in operation 3: Unknown operation: mesh.recalc_normals
+2025-05-23 23:58:54,644 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 343, in main
+    op_func = get_operation_function(op_spec['operation'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 269, in get_operation_function
+    raise ValueError(f"Unknown operation: {op_name}")
+ValueError: Unknown operation: mesh.recalc_normals
+
+2025-05-23 23:58:54,644 - __main__ - INFO -   Operation 4: bpy.ops.object.shade_smooth
+2025-05-23 23:58:54,644 - __main__ - ERROR -   Error in operation 4: '_BPyOpsSubModOp' object has no attribute 'shade_smooth'
+2025-05-23 23:58:54,644 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 343, in main
+    op_func = get_operation_function(op_spec['operation'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 266, in get_operation_function
+    op = getattr(op, part)
+         ^^^^^^^^^^^^^^^^^
+AttributeError: '_BPyOpsSubModOp' object has no attribute 'shade_smooth'
+
+2025-05-23 23:58:54,644 - __main__ - ERROR -     Error applying material: cannot access local variable 'obj' where it is not associated with a value
+2025-05-23 23:58:54,644 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 375, in main
+    apply_material(obj, spec['material'])
+                   ^^^
+UnboundLocalError: cannot access local variable 'obj' where it is not associated with a value
+
+2025-05-23 23:58:54,644 - __main__ - INFO - 
+Processing component: Leg_1
+2025-05-23 23:58:54,644 - __main__ - INFO -   Operation 1: mesh.build_cylinder_mesh
+2025-05-23 23:58:54,645 - __main__ - INFO -     Created mesh object: Leg_1_1_0
+2025-05-23 23:58:54,645 - __main__ - INFO -     Applied transformations
+2025-05-23 23:58:54,645 - __main__ - INFO -   Operation 2: bpy.ops.object.shade_smooth
+2025-05-23 23:58:54,645 - __main__ - ERROR -   Error in operation 2: '_BPyOpsSubModOp' object has no attribute 'shade_smooth'
+2025-05-23 23:58:54,646 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 343, in main
+    op_func = get_operation_function(op_spec['operation'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 266, in get_operation_function
+    op = getattr(op, part)
+         ^^^^^^^^^^^^^^^^^
+AttributeError: '_BPyOpsSubModOp' object has no attribute 'shade_smooth'
+
+2025-05-23 23:58:54,646 - __main__ - INFO -     Applied material
+2025-05-23 23:58:54,646 - __main__ - INFO - 
+Processing component: Leg_2
+2025-05-23 23:58:54,646 - __main__ - INFO -   Operation 1: mesh.build_cylinder_mesh
+2025-05-23 23:58:54,646 - __main__ - INFO -     Created mesh object: Leg_2_2_0
+2025-05-23 23:58:54,646 - __main__ - INFO -     Applied transformations
+2025-05-23 23:58:54,646 - __main__ - INFO -   Operation 2: bpy.ops.object.shade_smooth
+2025-05-23 23:58:54,646 - __main__ - ERROR -   Error in operation 2: '_BPyOpsSubModOp' object has no attribute 'shade_smooth'
+2025-05-23 23:58:54,646 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 343, in main
+    op_func = get_operation_function(op_spec['operation'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 266, in get_operation_function
+    op = getattr(op, part)
+         ^^^^^^^^^^^^^^^^^
+AttributeError: '_BPyOpsSubModOp' object has no attribute 'shade_smooth'
+
+2025-05-23 23:58:54,646 - __main__ - INFO -     Applied material
+2025-05-23 23:58:54,646 - __main__ - INFO - 
+Processing component: Leg_3
+2025-05-23 23:58:54,646 - __main__ - INFO -   Operation 1: mesh.build_cylinder_mesh
+2025-05-23 23:58:54,646 - __main__ - INFO -     Created mesh object: Leg_3_3_0
+2025-05-23 23:58:54,646 - __main__ - INFO -     Applied transformations
+2025-05-23 23:58:54,646 - __main__ - INFO -   Operation 2: bpy.ops.object.shade_smooth
+2025-05-23 23:58:54,646 - __main__ - ERROR -   Error in operation 2: '_BPyOpsSubModOp' object has no attribute 'shade_smooth'
+2025-05-23 23:58:54,646 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 343, in main
+    op_func = get_operation_function(op_spec['operation'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 266, in get_operation_function
+    op = getattr(op, part)
+         ^^^^^^^^^^^^^^^^^
+AttributeError: '_BPyOpsSubModOp' object has no attribute 'shade_smooth'
+
+2025-05-23 23:58:54,646 - __main__ - INFO -     Applied material
+2025-05-23 23:58:54,647 - __main__ - INFO - 
+Saved Blender file to: /Users/eyrinkim/Desktop/generated-assets/chair-test_bigedits.blend/furniture_20250523_235852.blend
+2025-05-24 00:02:01,601 - trimesh - DEBUG - searching for blender in: /Users/eyrinkim/opt/miniconda3/envs/infinigen/bin:/Applications/Blender/blender.app/Contents/MacOS:/opt/homebrew/bin:/Library/Frameworks/Python.framework/Versions/3.13/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/Users/eyrinkim/.vscode/extensions/ms-python.debugpy-2025.6.0-darwin-arm64/bundled/scripts/noConfigScripts:/usr/local/bin:/Applications/blender.app/Contents/MacOS:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/sbin:/Users/eyrinkim/opt/miniconda3/condabin:/Users/eyrinkim/Library/Application Support/Cursor/User/globalStorage/github.copilot-chat/debugCommand:/Users/eyrinkim/.nvm/versions/node/v22.14.0/bin:/System/Cryptexes/App/usr/bin:/usr/sbin:/Library/Frameworks/Python.framework/Versions/3.12/bin:/Applications/Blender.app/Contents/MacOS:/usr/bin:/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin
+2025-05-24 00:02:01,604 - trimesh - DEBUG - falling back to hashlib hashing: `pip install xxhash`for 50x faster cache checks
+2025-05-24 00:02:02,042 - matplotlib - DEBUG - matplotlib data path: /Users/eyrinkim/opt/miniconda3/envs/infinigen/lib/python3.11/site-packages/matplotlib/mpl-data
+2025-05-24 00:02:02,045 - matplotlib - DEBUG - CONFIGDIR=/Users/eyrinkim/.matplotlib
+2025-05-24 00:02:02,045 - matplotlib - DEBUG - interactive is False
+2025-05-24 00:02:02,045 - matplotlib - DEBUG - platform is darwin
+2025-05-24 00:02:02,165 - __main__ - INFO - Python executable: /Applications/Blender.app/Contents/Resources/4.4/python/bin/python3.11
+2025-05-24 00:02:02,165 - __main__ - INFO - Python version: 3.11.11 (main, Feb  7 2025, 22:56:22) [Clang 16.0.0 (clang-1600.0.26.6)]
+2025-05-24 00:02:02,166 - __main__ - INFO - Python path: ['/Applications/Blender.app/Contents/Resources/4.4/scripts/startup', '/Applications/Blender.app/Contents/Resources/4.4/scripts/modules', '/Applications/Blender.app/Contents/Resources/4.4/python/lib/python311.zip', '/Applications/Blender.app/Contents/Resources/4.4/python/lib/python3.11', '/Applications/Blender.app/Contents/Resources/4.4/python/lib/python3.11/lib-dynload', '/Applications/Blender.app/Contents/Resources/4.4/python/lib/python3.11/site-packages', '/Applications/Blender.app/Contents/Resources/4.4/scripts/freestyle/modules', '/Users/eyrinkim/Library/Application Support/Blender/4.4/scripts/addons/modules', '/Applications/Blender.app/Contents/Resources/4.4/scripts/addons_core', '/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen', '/Users/eyrinkim/opt/miniconda3/envs/infinigen/lib/python3.11/site-packages', '/Users/eyrinkim/.local/lib/python3.11/site-packages']
+2025-05-24 00:02:02,166 - __main__ - INFO - Scipy version: 1.15.3
+2025-05-24 00:02:02,166 - __main__ - INFO - Scipy location: /Users/eyrinkim/.local/lib/python3.11/site-packages/scipy/__init__.py
+2025-05-24 00:02:02,221 - matplotlib - DEBUG - CACHEDIR=/Users/eyrinkim/.matplotlib
+2025-05-24 00:02:02,222 - matplotlib.font_manager - DEBUG - Using fontManager instance from /Users/eyrinkim/.matplotlib/fontlist-v390.json
+2025-05-24 00:02:02,880 - OpenGL.acceleratesupport - INFO - No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+2025-05-24 00:02:02,962 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_ATTACHED_OBJECTS_ARB
+2025-05-24 00:02:02,962 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_DELETE_STATUS_ARB
+2025-05-24 00:02:02,962 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_INFO_LOG_LENGTH_ARB
+2025-05-24 00:02:02,962 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_SHADER_SOURCE_LENGTH_ARB
+2025-05-24 00:02:02,962 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_SUBTYPE_ARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_VALIDATE_STATUS_ARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_PROGRAM_OBJECT_ARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_SHADER_OBJECT_ARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GLhalfARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glAttachObjectARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glDeleteObjectARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glDetachObjectARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetAttachedObjectsARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetHandleARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetInfoLogARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetObjectParameterfvARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetObjectParameterivARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glInitShaderObjectsARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.fragment_shader.GLhalfARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.fragment_shader.glInitFragmentShaderARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.GL_OBJECT_ACTIVE_ATTRIBUTES_ARB
+2025-05-24 00:02:02,963 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.GL_OBJECT_ACTIVE_ATTRIBUTE_MAX_LENGTH_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.GLhalfARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.base_glGetActiveAttribARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.glGetObjectParameterivARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.glInitVertexShaderARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_CURRENT_MATRIX_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_CURRENT_MATRIX_STACK_DEPTH_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX0_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX10_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX11_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX12_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX13_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX14_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX15_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX16_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX17_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX18_ARB
+2025-05-24 00:02:02,964 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX19_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX1_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX20_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX21_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX22_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX23_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX24_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX25_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX26_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX27_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX28_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX29_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX2_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX30_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX31_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX3_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX4_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX5_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX6_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX7_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX8_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX9_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_ADDRESS_REGISTERS_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_ATTRIBS_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_ENV_PARAMETERS_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_INSTRUCTIONS_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_LOCAL_PARAMETERS_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_MATRICES_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_MATRIX_STACK_DEPTH_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB
+2025-05-24 00:02:02,965 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_ATTRIBS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_INSTRUCTIONS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_PARAMETERS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_TEMPORARIES_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_PARAMETERS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_TEMPORARIES_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_ADDRESS_REGISTERS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_ATTRIBS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_BINDING_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_ERROR_POSITION_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_ERROR_STRING_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_FORMAT_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_FORMAT_ASCII_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_INSTRUCTIONS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_LENGTH_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_ATTRIBS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_INSTRUCTIONS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_PARAMETERS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_TEMPORARIES_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_PARAMETERS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_STRING_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_TEMPORARIES_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_UNDER_NATIVE_LIMITS_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_TRANSPOSE_CURRENT_MATRIX_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_VERTEX_PROGRAM_ARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GLhalfARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glBindProgramARB
+2025-05-24 00:02:02,966 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glDeleteProgramsARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGenProgramsARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramEnvParameterdvARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramEnvParameterfvARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramLocalParameterdvARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramLocalParameterfvARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramStringARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramivARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glInitVertexProgramARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramEnvParameter4dARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramEnvParameter4dvARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramEnvParameter4fARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramEnvParameter4fvARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramLocalParameter4dARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramLocalParameter4dvARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramLocalParameter4fARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramLocalParameter4fvARB
+2025-05-24 00:02:02,967 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramStringARB
+2025-05-24 00:02:02,968 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.GL_FRAMEBUFFER_INCOMPLETE_LAYER_COUNT_ARB
+2025-05-24 00:02:02,968 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.GL_MAX_GEOMETRY_VARYING_COMPONENTS_ARB
+2025-05-24 00:02:02,968 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.GL_MAX_VERTEX_VARYING_COMPONENTS_ARB
+2025-05-24 00:02:02,968 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.GLhalfARB
+2025-05-24 00:02:02,968 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.glFramebufferTextureFaceARB
+2025-05-24 00:02:02,968 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.glInitGeometryShader4ARB
+2025-05-24 00:02:03,141 - infinigen.core.init - INFO - Addon antlandscape already in blender local addons, attempt to enable it.
+2025-05-24 00:02:03,162 - __main__ - INFO - Successfully loaded JSON specifications
+2025-05-24 00:02:03,163 - __main__ - INFO - Cleared existing objects from scene
+2025-05-24 00:02:03,163 - __main__ - INFO - 
+Processing component: Seat
+2025-05-24 00:02:03,163 - __main__ - INFO -   Operation 1: draw.bezier_curve
+2025-05-24 00:02:03,166 - __main__ - ERROR -   Error in operation 1: bpy_struct: item.attr = val: sequences of dimension 0 should contain 3 items, not 13
+2025-05-24 00:02:03,166 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 346, in main
+    result = op_func(**op_spec.get('params', {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 161, in bezier_curve
+    points[i].co = anchors[:, i]
+    ^^^^^^^^^^^^
+ValueError: bpy_struct: item.attr = val: sequences of dimension 0 should contain 3 items, not 13
+
+2025-05-24 00:02:03,166 - __main__ - INFO -   Operation 2: mesh.extrude_region_and_move
+2025-05-24 00:02:03,166 - __main__ - ERROR -   Error in operation 2: Unknown operation: mesh.extrude_region_and_move
+2025-05-24 00:02:03,167 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 343, in main
+    op_func = get_operation_function(op_spec['operation'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 269, in get_operation_function
+    raise ValueError(f"Unknown operation: {op_name}")
+ValueError: Unknown operation: mesh.extrude_region_and_move
+
+2025-05-24 00:02:03,167 - __main__ - INFO -   Operation 3: bpy.ops.object.shade_smooth
+2025-05-24 00:02:03,167 - __main__ - ERROR -   Error in operation 3: '_BPyOpsSubModOp' object has no attribute 'shade_smooth'
+2025-05-24 00:02:03,167 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 343, in main
+    op_func = get_operation_function(op_spec['operation'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 266, in get_operation_function
+    op = getattr(op, part)
+         ^^^^^^^^^^^^^^^^^
+AttributeError: '_BPyOpsSubModOp' object has no attribute 'shade_smooth'
+
+2025-05-24 00:02:03,167 - __main__ - ERROR -     Error applying material: cannot access local variable 'obj' where it is not associated with a value
+2025-05-24 00:02:03,167 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 375, in main
+    apply_material(obj, spec['material'])
+                   ^^^
+UnboundLocalError: cannot access local variable 'obj' where it is not associated with a value
+
+2025-05-24 00:02:03,167 - __main__ - INFO - 
+Processing component: Leg_1
+2025-05-24 00:02:03,167 - __main__ - INFO -   Operation 1: mesh.build_cylinder_mesh
+2025-05-24 00:02:03,168 - __main__ - INFO -     Created mesh object: Leg_1_1_0
+2025-05-24 00:02:03,168 - __main__ - INFO -     Applied transformations
+2025-05-24 00:02:03,168 - __main__ - INFO -     Applied material
+2025-05-24 00:02:03,168 - __main__ - INFO - 
+Processing component: Leg_2
+2025-05-24 00:02:03,168 - __main__ - INFO -   Operation 1: mesh.build_cylinder_mesh
+2025-05-24 00:02:03,168 - __main__ - INFO -     Created mesh object: Leg_2_2_0
+2025-05-24 00:02:03,169 - __main__ - INFO -     Applied transformations
+2025-05-24 00:02:03,169 - __main__ - INFO -     Applied material
+2025-05-24 00:02:03,169 - __main__ - INFO - 
+Processing component: Leg_3
+2025-05-24 00:02:03,169 - __main__ - INFO -   Operation 1: mesh.build_cylinder_mesh
+2025-05-24 00:02:03,169 - __main__ - INFO -     Created mesh object: Leg_3_3_0
+2025-05-24 00:02:03,169 - __main__ - INFO -     Applied transformations
+2025-05-24 00:02:03,169 - __main__ - INFO -     Applied material
+2025-05-24 00:02:03,170 - __main__ - INFO - 
+Saved Blender file to: /Users/eyrinkim/Desktop/generated-assets/chair-test_bigedits.blend/furniture_20250524_000200.blend
+2025-05-24 00:09:53,291 - trimesh - DEBUG - searching for blender in: /bin:/System/Cryptexes/App/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/Applications/Blender.app/Contents/MacOS:/Users/eyrinkim/Library/Application Support/Cursor/User/globalStorage/github.copilot-chat/debugCommand:/opt/homebrew/bin:/usr/bin:/Users/eyrinkim/.nvm/versions/node/v22.14.0/bin:/usr/sbin:/usr/local/bin:/Library/Frameworks/Python.framework/Versions/3.13/bin:/Users/eyrinkim/opt/miniconda3/condabin:/Users/eyrinkim/.vscode/extensions/ms-python.debugpy-2025.6.0-darwin-arm64/bundled/scripts/noConfigScripts:/Applications/Blender/blender.app/Contents/MacOS:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Users/eyrinkim/opt/miniconda3/envs/infinigen/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/sbin:/Applications/blender.app/Contents/MacOS:/Library/Frameworks/Python.framework/Versions/3.12/bin
+2025-05-24 00:09:53,294 - trimesh - DEBUG - falling back to hashlib hashing: `pip install xxhash`for 50x faster cache checks
+2025-05-24 00:09:53,722 - matplotlib - DEBUG - matplotlib data path: /Users/eyrinkim/opt/miniconda3/envs/infinigen/lib/python3.11/site-packages/matplotlib/mpl-data
+2025-05-24 00:09:53,725 - matplotlib - DEBUG - CONFIGDIR=/Users/eyrinkim/.matplotlib
+2025-05-24 00:09:53,725 - matplotlib - DEBUG - interactive is False
+2025-05-24 00:09:53,725 - matplotlib - DEBUG - platform is darwin
+2025-05-24 00:09:53,845 - __main__ - INFO - Python executable: /Applications/Blender.app/Contents/Resources/4.4/python/bin/python3.11
+2025-05-24 00:09:53,845 - __main__ - INFO - Python version: 3.11.11 (main, Feb  7 2025, 22:56:22) [Clang 16.0.0 (clang-1600.0.26.6)]
+2025-05-24 00:09:53,845 - __main__ - INFO - Python path: ['/Applications/Blender.app/Contents/Resources/4.4/scripts/startup', '/Applications/Blender.app/Contents/Resources/4.4/scripts/modules', '/Applications/Blender.app/Contents/Resources/4.4/python/lib/python311.zip', '/Applications/Blender.app/Contents/Resources/4.4/python/lib/python3.11', '/Applications/Blender.app/Contents/Resources/4.4/python/lib/python3.11/lib-dynload', '/Applications/Blender.app/Contents/Resources/4.4/python/lib/python3.11/site-packages', '/Applications/Blender.app/Contents/Resources/4.4/scripts/freestyle/modules', '/Users/eyrinkim/Library/Application Support/Blender/4.4/scripts/addons/modules', '/Applications/Blender.app/Contents/Resources/4.4/scripts/addons_core', '/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen', '/Users/eyrinkim/opt/miniconda3/envs/infinigen/lib/python3.11/site-packages', '/Users/eyrinkim/.local/lib/python3.11/site-packages']
+2025-05-24 00:09:53,846 - __main__ - INFO - Scipy version: 1.15.3
+2025-05-24 00:09:53,846 - __main__ - INFO - Scipy location: /Users/eyrinkim/.local/lib/python3.11/site-packages/scipy/__init__.py
+2025-05-24 00:09:53,900 - matplotlib - DEBUG - CACHEDIR=/Users/eyrinkim/.matplotlib
+2025-05-24 00:09:53,901 - matplotlib.font_manager - DEBUG - Using fontManager instance from /Users/eyrinkim/.matplotlib/fontlist-v390.json
+2025-05-24 00:09:54,558 - OpenGL.acceleratesupport - INFO - No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_ATTACHED_OBJECTS_ARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_DELETE_STATUS_ARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_INFO_LOG_LENGTH_ARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_SHADER_SOURCE_LENGTH_ARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_SUBTYPE_ARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_OBJECT_VALIDATE_STATUS_ARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_PROGRAM_OBJECT_ARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GL_SHADER_OBJECT_ARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.GLhalfARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glAttachObjectARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glDeleteObjectARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glDetachObjectARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetAttachedObjectsARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetHandleARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetInfoLogARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetObjectParameterfvARB
+2025-05-24 00:09:54,639 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glGetObjectParameterivARB
+2025-05-24 00:09:54,640 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.shader_objects.glInitShaderObjectsARB
+2025-05-24 00:09:54,640 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.fragment_shader.GLhalfARB
+2025-05-24 00:09:54,640 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.fragment_shader.glInitFragmentShaderARB
+2025-05-24 00:09:54,640 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.GL_OBJECT_ACTIVE_ATTRIBUTES_ARB
+2025-05-24 00:09:54,640 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.GL_OBJECT_ACTIVE_ATTRIBUTE_MAX_LENGTH_ARB
+2025-05-24 00:09:54,640 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.GLhalfARB
+2025-05-24 00:09:54,640 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.base_glGetActiveAttribARB
+2025-05-24 00:09:54,640 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.glGetObjectParameterivARB
+2025-05-24 00:09:54,640 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_shader.glInitVertexShaderARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_CURRENT_MATRIX_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_CURRENT_MATRIX_STACK_DEPTH_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX0_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX10_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX11_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX12_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX13_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX14_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX15_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX16_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX17_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX18_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX19_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX1_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX20_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX21_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX22_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX23_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX24_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX25_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX26_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX27_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX28_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX29_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX2_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX30_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX31_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX3_ARB
+2025-05-24 00:09:54,641 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX4_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX5_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX6_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX7_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX8_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MATRIX9_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_ADDRESS_REGISTERS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_ATTRIBS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_ENV_PARAMETERS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_INSTRUCTIONS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_LOCAL_PARAMETERS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_MATRICES_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_MATRIX_STACK_DEPTH_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_ATTRIBS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_INSTRUCTIONS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_PARAMETERS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_NATIVE_TEMPORARIES_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_PARAMETERS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_MAX_PROGRAM_TEMPORARIES_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_ADDRESS_REGISTERS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_ATTRIBS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_BINDING_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_ERROR_POSITION_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_ERROR_STRING_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_FORMAT_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_FORMAT_ASCII_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_INSTRUCTIONS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_LENGTH_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_ATTRIBS_ARB
+2025-05-24 00:09:54,642 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_INSTRUCTIONS_ARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_PARAMETERS_ARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_NATIVE_TEMPORARIES_ARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_PARAMETERS_ARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_STRING_ARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_TEMPORARIES_ARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_PROGRAM_UNDER_NATIVE_LIMITS_ARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_TRANSPOSE_CURRENT_MATRIX_ARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GL_VERTEX_PROGRAM_ARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.GLhalfARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glBindProgramARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glDeleteProgramsARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGenProgramsARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramEnvParameterdvARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramEnvParameterfvARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramLocalParameterdvARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramLocalParameterfvARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramStringARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glGetProgramivARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glInitVertexProgramARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramEnvParameter4dARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramEnvParameter4dvARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramEnvParameter4fARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramEnvParameter4fvARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramLocalParameter4dARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramLocalParameter4dvARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramLocalParameter4fARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramLocalParameter4fvARB
+2025-05-24 00:09:54,643 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.vertex_program.glProgramStringARB
+2025-05-24 00:09:54,644 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.GL_FRAMEBUFFER_INCOMPLETE_LAYER_COUNT_ARB
+2025-05-24 00:09:54,644 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.GL_MAX_GEOMETRY_VARYING_COMPONENTS_ARB
+2025-05-24 00:09:54,644 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.GL_MAX_VERTEX_VARYING_COMPONENTS_ARB
+2025-05-24 00:09:54,644 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.GLhalfARB
+2025-05-24 00:09:54,644 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.glFramebufferTextureFaceARB
+2025-05-24 00:09:54,644 - OpenGL.GL.shaders - DEBUG - Found no alternate for: OpenGL.GL.ARB.geometry_shader4.glInitGeometryShader4ARB
+2025-05-24 00:09:54,803 - infinigen.core.init - INFO - Addon antlandscape already in blender local addons, attempt to enable it.
+2025-05-24 00:09:54,823 - __main__ - INFO - Successfully loaded JSON specifications
+2025-05-24 00:09:54,824 - __main__ - INFO - Cleared existing objects from scene
+2025-05-24 00:09:54,824 - __main__ - INFO - 
+Processing component: Seat
+2025-05-24 00:09:54,824 - __main__ - INFO -   Operation 1: draw.bezier_curve
+2025-05-24 00:09:54,827 - __main__ - ERROR -   Error in operation 1: bpy_struct: item.attr = val: sequences of dimension 0 should contain 3 items, not 19
+2025-05-24 00:09:54,828 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 346, in main
+    result = op_func(**op_spec.get('params', {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 161, in bezier_curve
+    points[i].co = anchors[:, i]
+    ^^^^^^^^^^^^
+ValueError: bpy_struct: item.attr = val: sequences of dimension 0 should contain 3 items, not 19
+
+2025-05-24 00:09:54,828 - __main__ - INFO -   Operation 2: mesh.build_plane_mesh
+2025-05-24 00:09:54,829 - __main__ - INFO -     Created mesh object: Seat_0_1
+2025-05-24 00:09:54,829 - __main__ - INFO -     Applied transformations
+2025-05-24 00:09:54,829 - __main__ - INFO -   Operation 3: bpy.ops.object.shade_smooth
+2025-05-24 00:09:54,829 - __main__ - ERROR -   Error in operation 3: '_BPyOpsSubModOp' object has no attribute 'shade_smooth'
+2025-05-24 00:09:54,829 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 343, in main
+    op_func = get_operation_function(op_spec['operation'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 266, in get_operation_function
+    op = getattr(op, part)
+         ^^^^^^^^^^^^^^^^^
+AttributeError: '_BPyOpsSubModOp' object has no attribute 'shade_smooth'
+
+2025-05-24 00:09:54,829 - __main__ - INFO -     Applied material
+2025-05-24 00:09:54,829 - __main__ - INFO - 
+Processing component: Leg_1
+2025-05-24 00:09:54,829 - __main__ - INFO -   Operation 1: draw.bezier_curve
+2025-05-24 00:09:54,830 - __main__ - ERROR -   Error in operation 1: bpy_struct: item.attr = val: sequences of dimension 0 should contain 3 items, not 4
+2025-05-24 00:09:54,830 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 346, in main
+    result = op_func(**op_spec.get('params', {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 161, in bezier_curve
+    points[i].co = anchors[:, i]
+    ^^^^^^^^^^^^
+ValueError: bpy_struct: item.attr = val: sequences of dimension 0 should contain 3 items, not 4
+
+2025-05-24 00:09:54,830 - __main__ - INFO -     Applied material
+2025-05-24 00:09:54,830 - __main__ - INFO - 
+Processing component: Leg_2
+2025-05-24 00:09:54,830 - __main__ - INFO -   Operation 1: draw.bezier_curve
+2025-05-24 00:09:54,831 - __main__ - ERROR -   Error in operation 1: bpy_struct: item.attr = val: sequences of dimension 0 should contain 3 items, not 4
+2025-05-24 00:09:54,831 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 346, in main
+    result = op_func(**op_spec.get('params', {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 161, in bezier_curve
+    points[i].co = anchors[:, i]
+    ^^^^^^^^^^^^
+ValueError: bpy_struct: item.attr = val: sequences of dimension 0 should contain 3 items, not 4
+
+2025-05-24 00:09:54,831 - __main__ - INFO -     Applied material
+2025-05-24 00:09:54,831 - __main__ - INFO - 
+Processing component: Leg_3
+2025-05-24 00:09:54,831 - __main__ - INFO -   Operation 1: draw.bezier_curve
+2025-05-24 00:09:54,831 - __main__ - ERROR -   Error in operation 1: bpy_struct: item.attr = val: sequences of dimension 0 should contain 3 items, not 4
+2025-05-24 00:09:54,831 - __main__ - ERROR - Traceback (most recent call last):
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 346, in main
+    result = op_func(**op_spec.get('params', {}))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/eyrinkim/Documents/GitHub/cs231n-project/infinigen/primitive_builder/generate_blend_from_json.py", line 161, in bezier_curve
+    points[i].co = anchors[:, i]
+    ^^^^^^^^^^^^
+ValueError: bpy_struct: item.attr = val: sequences of dimension 0 should contain 3 items, not 4
+
+2025-05-24 00:09:54,832 - __main__ - INFO -     Applied material
+2025-05-24 00:09:54,832 - __main__ - INFO - 
+Saved Blender file to: /Users/eyrinkim/Desktop/generated-assets/chair-test_bigedits.blend/furniture_20250524_000952.blend

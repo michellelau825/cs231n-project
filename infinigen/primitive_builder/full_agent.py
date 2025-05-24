@@ -2,11 +2,13 @@ import os
 from pathlib import Path
 import sys
 import openai
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Set, Tuple
 import argparse
 import json
 import subprocess
 from datetime import datetime
+import traceback
+import numpy as np
 
 # Add project root to path
 project_root = Path(__file__).parent.parent
@@ -23,47 +25,199 @@ class FurnitureGenerator:
         self.primitive_gen = PrimitiveGenerator(api_key)
         self.output_path = output_path
 
+    def analyze_semantic_structure(self, prompt: str, components: Dict) -> Tuple[Set[str], Set[str]]:
+        """Analyze the semantic structure to determine required components and relationships"""
+        required_components = set()
+        required_properties = set()
+        
+        # Extract semantic relationships from components
+        if "components" in components:
+            for comp in components["components"]:
+                # Add component name
+                if "name" in comp:
+                    required_components.add(comp["name"].lower())
+                
+                # Add geometric properties
+                if "geometric_properties" in comp:
+                    props = comp["geometric_properties"]
+                    if "shape" in props:
+                        required_properties.add(props["shape"].lower())
+                    if "identical" in props and props["identical"]:
+                        required_properties.add("identical_components")
+                    if "mirrored_positions" in props:
+                        required_properties.add("mirrored_components")
+                    if "radial_arrangement" in props:
+                        required_properties.add("radial_components")
+                        
+                # Add spatial relationships
+                if "spatial_relationships" in components:
+                    for rel in components["spatial_relationships"]:
+                        if "connected" in rel.lower():
+                            required_properties.add("connected_components")
+                        if "centered" in rel.lower():
+                            required_properties.add("centered_components")
+                        if "symmetrical" in rel.lower():
+                            required_properties.add("symmetrical_components")
+                            
+        return required_components, required_properties
+
+    def validate_primitive_specs(self, primitive_specs: List[Dict], required_components: Set[str], required_properties: Set[str]) -> bool:
+        """Validate that primitive specifications match semantic requirements"""
+        found_components = set()
+        found_properties = set()
+        
+        # Track component relationships
+        component_positions = {}  # Track positions for symmetry/radial checks
+        component_connections = set()  # Track connected components
+        
+        for spec in primitive_specs:
+            # Extract component information
+            op = spec.get("operation", "").lower()
+            params = spec.get("params", {})
+            transform = spec.get("transform", {})
+            name = spec.get("name", "").lower()
+            
+            # Handle numbered components (e.g., Leg_1, Leg_2 -> leg)
+            base_name = name.split('_')[0] if '_' in name else name
+            found_components.add(base_name)
+            
+            # Check for curved elements
+            if "bezier" in op or "curve" in op:
+                found_properties.add("curved")
+                # Check for complex shapes (heart, etc.)
+                if "anchors" in params and len(params["anchors"]) >= 5:
+                    found_properties.add("complex_shape")
+                    
+            # Track component positions for relationship validation
+            if "location" in transform:
+                loc = transform["location"]
+                component_positions[base_name] = loc
+                
+            # Check for connected components
+            if "connected" in op or any("connect" in p.lower() for p in params):
+                component_connections.add(base_name)
+                
+        # Convert required components to lowercase for comparison
+        required_components = {comp.lower() for comp in required_components}
+        
+        # Validate required components
+        if not required_components.issubset(found_components):
+            print(f"Missing components: {required_components - found_components}")
+            return False
+            
+        # Validate required properties
+        if "curved" in required_properties and "curved" not in found_properties:
+            print("Missing curved elements")
+            return False
+            
+        if "complex_shape" in required_properties and "complex_shape" not in found_properties:
+            print("Missing complex shape elements")
+            return False
+            
+        if "connected_components" in required_properties and len(component_connections) < 2:
+            print("Components not properly connected")
+            return False
+            
+        if "symmetrical_components" in required_properties:
+            # Check for symmetry in component positions
+            if not self._check_symmetry(component_positions):
+                print("Components not properly symmetrical")
+                return False
+                
+        if "radial_components" in required_properties:
+            # Check for radial arrangement
+            if not self._check_radial_arrangement(component_positions):
+                print("Components not properly arranged radially")
+                return False
+                
+        return True
+        
+    def _check_symmetry(self, positions: Dict[str, List[float]]) -> bool:
+        """Check if components are arranged symmetrically"""
+        if len(positions) < 2:
+            return False
+            
+        # Check for mirror symmetry along any axis
+        for comp1, pos1 in positions.items():
+            for comp2, pos2 in positions.items():
+                if comp1 != comp2:
+                    # Check x-axis symmetry
+                    if abs(pos1[0] + pos2[0]) < 0.1 and abs(pos1[1] - pos2[1]) < 0.1:
+                        return True
+                    # Check y-axis symmetry
+                    if abs(pos1[1] + pos2[1]) < 0.1 and abs(pos1[0] - pos2[0]) < 0.1:
+                        return True
+        return False
+        
+    def _check_radial_arrangement(self, positions: Dict[str, List[float]]) -> bool:
+        """Check if components are arranged radially"""
+        if len(positions) < 3:
+            return False
+            
+        # Calculate angles between components
+        angles = []
+        center = [0, 0, 0]
+        for pos in positions.values():
+            angle = np.arctan2(pos[1] - center[1], pos[0] - center[0])
+            angles.append(angle)
+            
+        # Check if angles are roughly evenly distributed
+        angles.sort()
+        angle_diffs = [angles[i+1] - angles[i] for i in range(len(angles)-1)]
+        angle_diffs.append(2*np.pi - (angles[-1] - angles[0]))
+        
+        # Check if differences are roughly equal
+        mean_diff = np.mean(angle_diffs)
+        return all(abs(diff - mean_diff) < 0.1 for diff in angle_diffs)
+
     def generate_json(self, prompt: str) -> Optional[Path]:
         """Generate JSON specifications without requiring Blender"""
-        print("\n=== Starting Generation Pipeline ===")
-        print(f"Input Prompt: '{prompt}'")
-        
-        # Step 1: Classification
-        print("\n1. Running Classifier...")
-        classification, explanation = self.classifier.classify(prompt)
-        print(f"Classification Result: {classification}")
-        print(f"Explanation: {explanation}")
-        
-        if classification == "not a furniture":
-            print("Rejected: Generation stopped.")
-            return None
+        try:
+            # Step 1: Classification
+            classification, explanation = self.classifier.classify(prompt)
+            
+            if classification == "not a furniture":
+                return None
 
-        # Step 2: Semantic Decomposition
-        print("\n2. Running Semantic Decomposition...")
-        components = self.decomposer.decompose(prompt)
-        print("Decomposed Components:")
-        print(json.dumps(components, indent=2))
-        
-        # Step 3: Generate Primitive Calls
-        print("\n3. Generating Primitive Specifications...")
-        primitive_specs = self.primitive_gen.generate(components)
-        
-        # Create output directory with timestamp
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        output_dir = Path(self.output_path).expanduser() if self.output_path else Path.home() / "Desktop" / "generated-assets"
-        output_dir = output_dir.resolve()  # Resolve any symlinks or relative paths
-        output_dir.mkdir(parents=True, exist_ok=True)
-        
-        # Generate unique filename with timestamp
-        base_name = f"furniture_{timestamp}"
-        json_path = output_dir / f"{base_name}.json"
-        
-        # Save JSON file
-        with open(json_path, "w") as f:
-            json.dump(primitive_specs, f, indent=2)
-        print(f"\nJSON specifications saved to: {json_path}")
-        
-        return json_path
+            # Step 2: Semantic Decomposition
+            components = self.decomposer.decompose(prompt)
+            
+            # Analyze semantic structure
+            required_components, required_properties = self.analyze_semantic_structure(prompt, components)
+            
+            # Step 3: Generate Primitive Calls
+            primitive_specs = self.primitive_gen.generate(components)
+            
+            if not primitive_specs:
+                return None
+                
+            # Validate primitive specifications
+            if not self.validate_primitive_specs(primitive_specs, required_components, required_properties):
+                print("Validation failed. Retrying generation...")
+                primitive_specs = self.primitive_gen.generate(components)
+                if not primitive_specs or not self.validate_primitive_specs(primitive_specs, required_components, required_properties):
+                    return None
+                
+            # Create output directory with timestamp
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            if self.output_path:
+                output_dir = Path(self.output_path).expanduser()
+            else:
+                output_dir = Path.home() / "Desktop" / "generated-assets"
+            
+            output_dir.mkdir(parents=True, exist_ok=True)
+            json_path = output_dir / f"furniture_{timestamp}.json"
+            
+            # Save JSON file
+            try:
+                with open(json_path, 'w') as f:
+                    json.dump(primitive_specs, f, indent=2)
+                return json_path
+            except Exception as e:
+                return None
+                
+        except Exception as e:
+            return None
 
 def generate_blend_file(json_path: Path) -> Optional[Path]:
     """Generate Blender file from JSON specifications"""
@@ -72,35 +226,38 @@ def generate_blend_file(json_path: Path) -> Optional[Path]:
         blender_path = find_blender()
         if not blender_path:
             return None
-
-        # Construct the command
-        script_path = project_root / "primitive_builder" / "generate_blend_from_json.py"
-        cmd = [
+            
+        # Get the project root directory
+        project_root = Path(__file__).parent.parent
+        
+        # Construct path to generate_blend_from_json.py
+        blend_script = project_root / "primitive_builder" / "generate_blend_from_json.py"
+        
+        if not blend_script.exists():
+            return None
+            
+        # Run the script using blender
+        blend_cmd = [
             str(blender_path),
             "--background",
             "--python",
-            str(script_path),
+            str(blend_script),
             "--",
             str(json_path)
         ]
-
-        # Run the command
-        print(f"Running command: {' '.join(cmd)}")
-        result = subprocess.run(cmd, capture_output=True, text=True)
         
-        if result.returncode == 0:
-            # The blend file will be in the same directory as the JSON file
-            blend_path = json_path.with_suffix('.blend')
-            if blend_path.exists():
-                return blend_path
+        subprocess.run(blend_cmd, check=True)
+        
+        # Get the output blend file path
+        blend_path = json_path.with_suffix('.blend')
+        if blend_path.exists():
+            return blend_path
         else:
-            print(f"Error running Blender: {result.stderr}")
-            print(f"Command output: {result.stdout}")
-        
+            return None
+            
+    except subprocess.CalledProcessError:
         return None
-
-    except Exception as e:
-        print(f"Error generating Blender file: {e}")
+    except Exception:
         return None
 
 def find_blender() -> Optional[Path]:
@@ -143,20 +300,23 @@ def main():
     if not api_key:
         sys.exit(1)
 
-    generator = FurnitureGenerator(api_key, args.output)
-    json_path = generator.generate_json(args.prompt)
-    
-    if json_path:
-        if not args.json_only:
-            print("\nGenerating Blender file...")
-            blend_path = generate_blend_file(json_path)
-            if blend_path:
-                print(f"Blender file created at: {blend_path}")
-            else:
-                print("Failed to generate Blender file")
-        print("\nGeneration Complete!")
-    else:
-        print("\nGeneration Failed!")
+    try:
+        generator = FurnitureGenerator(api_key, args.output)
+        json_path = generator.generate_json(args.prompt)
+        
+        if json_path:
+            if not args.json_only:
+                blend_path = generate_blend_file(json_path)
+                if blend_path:
+                    print(f"Blender file created at: {blend_path}")
+                else:
+                    print("Failed to generate Blender file")
+            print("Generation Complete!")
+        else:
+            print("Generation Failed!")
+            
+    except Exception:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main() 

@@ -1,6 +1,7 @@
 import sys
 import os
 from pathlib import Path
+import traceback
 
 # Get the project root directory
 project_root = Path(__file__).parent.parent
@@ -25,17 +26,10 @@ import bpy
 import numpy as np
 from infinigen.core.util import blender as butil
 
-# Print diagnostic information
-print("Python executable:", sys.executable)
-print("Python version:", sys.version)
-print("Python path:", sys.path)
-
 try:
     import scipy
-    print("Scipy version:", scipy.__version__)
-    print("Scipy location:", scipy.__file__)
-except ImportError as e:
-    print("Error importing scipy:", str(e))
+except ImportError:
+    pass
 
 # Import draw utilities after fixing Python path
 from infinigen.assets.utils import draw as draw_utils
@@ -128,7 +122,6 @@ def build_plane_mesh(width=1.0, depth=1.0):
     mesh.update()
     return mesh
 
-# Curve-based primitives from draw.py
 def bezier_curve(anchors, vector_locations=(), resolution=None, to_mesh=True):
     """Create a bezier curve from anchor points"""
     n = len(anchors[0])
@@ -287,58 +280,35 @@ def apply_material(obj, material_info):
         else:
             obj.data.materials.append(material)
             
-    except Exception as e:
-        print(f"Error applying material: {e}")
+    except Exception:
+        pass
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: blender --background --python generate_blend_from_json.py -- <primitives.json>")
         sys.exit(1)
+        
     try:
         idx = sys.argv.index("--")
         json_path = sys.argv[idx + 1]
     except (ValueError, IndexError):
-        print("Error: JSON file path required after '--'")
         sys.exit(1)
 
-    with open(json_path, "r") as f:
-        specs = json.load(f)
+    try:
+        with open(json_path, "r") as f:
+            specs = json.load(f)
+    except Exception:
+        sys.exit(1)
 
     # Clear existing objects
-    bpy.ops.object.select_all(action='SELECT')
-    bpy.ops.object.delete()
+    try:
+        bpy.ops.object.select_all(action='SELECT')
+        bpy.ops.object.delete()
+    except Exception:
+        sys.exit(1)
 
     for i, spec in enumerate(specs):
-<<<<<<< Updated upstream
-        op = spec["operation"]
-        params = spec["params"]
-        
-        try:
-            # Execute the Blender primitive operation
-            if op.startswith("bpy.ops.mesh.primitive_"):
-                # Convert params to keyword arguments
-                kwargs = {}
-                for key, value in params.items():
-                    if key in ["location", "rotation", "scale"]:
-                        kwargs[key] = tuple(value)
-                    else:
-                        kwargs[key] = value
-                
-                # Execute the operation
-                eval(f"{op}(**kwargs)")
-                print(f"Created {op} with params: {params}")
-            else:
-                print(f"Warning: Unknown primitive operation '{op}', skipping...")
-                continue
-
-        except Exception as e:
-            print(f"Error creating {op}: {str(e)}")
-            continue
-=======
-        print(f"\nProcessing component: {spec['name']}")
-        for j, op_spec in enumerate(spec['operations']):
+        for j, op_spec in enumerate(spec.get('operations', [])):
             try:
-                print(f"  Operation {j+1}: {op_spec['operation']}")
                 op_func = get_operation_function(op_spec['operation'])
                 
                 # Call the operation function
@@ -346,29 +316,35 @@ def main():
                 
                 # Handle the result
                 if isinstance(result, bpy.types.Mesh):
-                    obj = add_mesh_to_scene(result, name=f"{spec['name']}_{i}_{j}")
+                    obj = add_mesh_to_scene(result, name=f"{spec.get('name', 'Component')}_{i}_{j}")
                 elif isinstance(result, bpy.types.Object):
                     obj = result
                 else:
-                    continue  # Skip if no object was created
+                    continue
                 
                 # Apply transformations
                 if 'transform' in op_spec:
-                    apply_transform(obj, op_spec['transform'])
+                    try:
+                        apply_transform(obj, op_spec['transform'])
+                    except Exception:
+                        continue
                 
-            except Exception as e:
-                print(f"  Error in operation {j+1}: {e}")
+            except Exception:
                 continue
         
         # Apply material to the last created object
         if 'material' in spec:
-            apply_material(obj, spec['material'])
->>>>>>> Stashed changes
+            try:
+                apply_material(obj, spec['material'])
+            except Exception:
+                pass
 
     # Save the result
-    blend_path = Path(json_path).with_suffix('.blend')
-    bpy.ops.wm.save_as_mainfile(filepath=str(blend_path))
-    print(f"\nSaved Blender file to: {blend_path}")
+    try:
+        blend_path = Path(json_path).with_suffix('.blend')
+        bpy.ops.wm.save_as_mainfile(filepath=str(blend_path))
+    except Exception:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main() 

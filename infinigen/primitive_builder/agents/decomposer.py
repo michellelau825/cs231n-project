@@ -1,12 +1,19 @@
 import openai
-from typing import Dict, List
 import json
+import logging
+from typing import Dict, List, Any, Tuple
+
+logger = logging.getLogger(__name__)
 
 class SemanticDecomposer:
+    """An agent that breaks down furniture descriptions into components."""
+    
     def __init__(self, api_key: str):
         self.client = openai.OpenAI(api_key=api_key)
-        
-    def decompose(self, prompt: str) -> Dict:
+        logger.info("SemanticDecomposer initialized")
+    
+    def decompose(self, prompt: str) -> Dict[str, Any]:
+        """Break down a furniture description into its components"""
         system_prompt = """You are a 3D modeling expert specializing in geometric decomposition. Break down objects into their core components, being EXPLICIT about quantities of identical components.
 
 Example 1 - Office Chair:
@@ -67,39 +74,34 @@ Provide a similar breakdown for the given object, focusing on:
 4. Spatial relationships between components
 5. Nested identical components
 
-Avoid mentioning colors, materials, or textures unless specifically relevant to the shape."""
+Avoid mentioning colors, materials, or textures unless specifically relevant to the shape.
+IMPORTANT: Output ONLY valid JSON with no additional text."""
 
         try:
-            print("\nSending prompt to GPT-4...")
+            logger.info("Sending prompt to GPT-4...")
             response = self.client.chat.completions.create(
                 model="gpt-4-1106-preview",
                 messages=[
-                    {"role": "system", "content": system_prompt + "\nIMPORTANT: Output ONLY valid JSON with no additional text."},
+                    {"role": "system", "content": system_prompt},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.1
+                temperature=0.1,
+                response_format={"type": "json_object"}
             )
             
-            print("\nGPT-4 Response received. Attempting to parse JSON...")
-            content = response.choices[0].message.content.strip()
-            print(f"\nRaw response:\n{content}")
+            content = response.choices[0].message.content
+            logger.debug(f"Raw response content: {content}")
             
+            # Parse the response as JSON
             try:
-                # Try to extract JSON from the response
                 components = json.loads(content)
-                print("\nJSON parsed successfully!")
+                logger.info("Successfully parsed JSON response")
                 return components
-                
-            except json.JSONDecodeError as je:
-                print(f"\nJSON parsing error: {str(je)}")
-                print(f"Error occurred at position: {je.pos}")
-                print(f"Line number: {je.lineno}")
-                print(f"Column number: {je.colno}")
-                print("\nProblematic content:")
-                print(content)
+            except json.JSONDecodeError as e:
+                logger.error(f"Error parsing JSON response: {e}")
+                logger.error(f"Raw content: {content}")
                 return None
                 
         except Exception as e:
-            print(f"\nAPI or other error: {str(e)}")
-            print(f"Full error: {repr(e)}")
+            logger.error(f"Error in semantic decomposition: {e}")
             return None
