@@ -3,7 +3,6 @@ from typing import Dict, List
 import json
 from pathlib import Path
 from .context_provider import ContextProvider
-from .validator import ComponentValidator
 from .materials_agent import MaterialsAgent
 
 class PrimitiveGenerator:
@@ -12,7 +11,6 @@ class PrimitiveGenerator:
         self.primitives_dir = Path.home() / "Desktop" / "generated-assets" / "primitives"
         self.primitives_dir.mkdir(parents=True, exist_ok=True)
         self.context_provider = ContextProvider()
-        self.validator = ComponentValidator(api_key)
         self.materials_agent = MaterialsAgent(api_key)
         
     def generate(self, components: Dict) -> List[Dict]:
@@ -22,11 +20,9 @@ class PrimitiveGenerator:
         # Get factory context
         print("\n=== Loading Factory Examples ===")
         factory_context = self.context_provider.get_factory_context()
-        print("\nFactory Context Loaded:")
-        print(factory_context)
         
         # Add context to system prompt
-        system_prompt = """You are a 3D modeling expert. Convert each component into optimal operations, respecting quantities from the decomposition.
+        system_prompt = """You are a 3D modeling expert. Convert each component into optimal operations.
 
 CRITICAL ORDERING RULES:
 1. Always start with ground-touching components (legs, base supports)
@@ -57,6 +53,11 @@ FACTORY EXAMPLES FOR REFERENCE:
 """ + factory_context + """
 
 AVAILABLE FUNCTIONS (Choose the best for each component):
+CRITICAL RULES:
+1. ONLY use operations from the list above
+2. DO NOT invent new operations
+3. DO NOT add extra parameters to operations
+4. Each operation MUST match the exact format shown
 
 From infinigen/assets/utils/mesh.py:
 - mesh.build_box_mesh(width=1.0, depth=1.0, height=1.0)  # Perfect for flat surfaces and straight edges
@@ -64,7 +65,7 @@ From infinigen/assets/utils/mesh.py:
 - mesh.build_prism_mesh(n=6, r_min=1.0, r_max=1.5, height=0.3, tilt=0.3)  # For angular shapes
 - mesh.build_cylinder_mesh(radius=1.0, height=2.0, segments=32)  # For perfect cylinders
 - mesh.build_cone_mesh(radius=1.0, height=2.0, segments=32)  # For conical shapes
-- mesh.build_sphere_mesh(radius=1.0, segments=32, rings=16)  # For spherical shapes
+- mesh.build_sphere_mesh(radius=1.0, segments=32, rings=16)  # For spherical shapes; use 1,1,1 for scale ONLY IF YOU NEED A PERFECT SPHERE
 - mesh.build_torus_mesh(major_radius=1.0, minor_radius=0.25, major_segments=32, minor_segments=16)  # For ring shapes, the center is hollow
 - mesh.dissolve_degenerate(obj)  # Cleanup mesh
 - mesh.dissolve_limited(obj)  # Cleanup mesh
@@ -101,7 +102,7 @@ From infinigen/assets/utils/draw.py:
 - draw.spin(anchors, vector_locations=(), axis=(0,0,1))  # For circular shapes
 - draw.shape_by_angles(obj, angles, scales=None)  # For complex profiles
 - draw.surface_from_func(fn, div_x=16, div_y=16)  # For curved surfaces
-- draw.bezier_curve(anchors, to_mesh=True)  # For smooth curves
+- draw.bezier_curve(anchors, vector_locations=(), resolution=None, to_mesh=True)  # For smooth curves
 - draw.remesh_fill(obj, resolution=0.005)  # Improve mesh quality
 - draw.cut_plane(obj, cut_center, cut_normal)  # For precise cuts
 
@@ -119,62 +120,8 @@ Blender Operations (use only when needed):
 - bpy.ops.object.modifier_add(type='SUBSURF')  # Smooth surfaces
 - bpy.ops.object.shade_smooth()  # Improve appearance
 
-OPTIMIZATION STRATEGY:
-1. Start with the most appropriate base mesh function:
-   - mesh.build_box_mesh for rectangular parts
-   - mesh.build_cylinder_mesh for circular columns
-   - mesh.build_sphere_mesh for rounded elements
-   - mesh.build_prism_mesh for angular shapes
-   
-2. Apply mesh operations in this order:
-   a) Create base shape
-   b) Apply extrusions or modifications
-   c) Clean up (merge_by_distance, remove_doubles)
-   d) Fix normals and topology
-   e) Add detail (bevel, subdivide)
-   f) Final cleanup and preparation
-
-SPATIAL CONSTRAINTS:
-1. Table/Chair Tops:
-   - Must be perfectly horizontal (rotation [0,0,0])
-   - Standard heights: Tables 0.7-0.8, Chairs 0.4-0.45
-   - Thickness: 0.02-0.05 units
-   - Surface must be flat and level
-
-2. Legs:
-   - Must be FLUSH with the top surface (no protrusion)
-   - Must reach exactly to ground (y=0)
-   - Must be vertical unless design specifies otherwise
-   - Must be symmetrically placed
-   - Must be properly inset from edges (typically 0.05-0.1 units)
-   - For tables: position at corners
-   - For chairs: position for stability
-
-Example (Table Leg Done Right):
-[
-    {
-        "operation": "mesh.build_box_mesh",  # Base leg shape
-        "params": {
-            "width": 0.06,
-            "depth": 0.06,
-            "height": 0.75  # Exactly table_height
-        },
-        "transform": {
-            "location": [0.57, 0.37, 0.375],  # Positioned under top surface
-            "rotation": [0, 0, 0],
-            "scale": [1, 1, 1]
-        }
-    },
-    {
-        "operation": "bpy.ops.object.modifier_add",  # Add bevel for realism
-        "params": {"type": "BEVEL"}
-    },
-    {
-        "operation": "bpy.ops.object.shade_smooth",  # Improve appearance
-        "params": {}
-    }
-]
-
+Very important: if component is a leg or connecting THIN component, and shape is curved_component (not straight), use draw.bezier_curve with to_mesh=True.
+if component is a cushion, try using mesh.build_sphere_mesh and scale it appropriately.
 COMPONENT-BASED STRUCTURE:
 Each component from the decomposition must have its own set of operations. Output format:
 
@@ -439,7 +386,7 @@ Output ONLY valid JSON with no additional text."""
             )
             
             content = response.choices[0].message.content
-            print("\nGPT Response:", content)
+            print("\nInitial GPT Response:", content)  # Debug print
             
             try:
                 parsed = json.loads(content)
@@ -447,44 +394,9 @@ Output ONLY valid JSON with no additional text."""
                     print("Error: Response missing 'components' list")
                     return []
                 
-                # Validate component structure
-                components_list = parsed['components']
-                if not isinstance(components_list, list):
-                    print("Error: 'components' is not a list")
-                    return []
-                
-                # Validate and fix component connections
-                print("\n=== Starting Component Validation ===")
-                validated_components = self.validator.validate_and_fix(components_list)
-                
-                if validated_components:
-                    print(f"\nSuccessfully validated {len(validated_components)} components")
-                    print("Final component structure with all connections:")
-                    print(json.dumps(validated_components, indent=2))
-                    
-                    # Write the validated components to a file for debugging
-                    import os
-                    from pathlib import Path
-                    output_dir = Path.home() / "Desktop" / "generated-assets"
-                    output_dir.mkdir(parents=True, exist_ok=True)
-                    output_file = output_dir / "latest_validated_components.json"
-                    
-                    with open(output_file, "w") as f:
-                        json.dump({"components": validated_components}, f, indent=2)
-                    print(f"\nWrote validated components to: {output_file}")
-                    
-                    # Assign materials to validated components
-                    components_with_materials = self.materials_agent.assign_materials(validated_components)
-                    
-                    if components_with_materials:
-                        print(f"\nSuccessfully generated and validated {len(components_with_materials)} components with materials")
-                        return components_with_materials
-                    else:
-                        print("\nError: No components generated")
-                        return []
-                else:
-                    print("\nValidation failed, returning original components")
-                    return components_list
+                # Just do basic JSON structure check and return
+                # Let validator.py handle ALL validation
+                return parsed['components']
                 
             except json.JSONDecodeError as e:
                 print(f"\nError parsing JSON: {str(e)}")
@@ -494,132 +406,3 @@ Output ONLY valid JSON with no additional text."""
         except Exception as e:
             print(f"\nError in primitive generation: {e}")
             return []
-
-    def _validate_connections(self, components: List[Dict]) -> List[Dict]:
-        """Ensure all components are properly connected and grounded"""
-        
-        # Find all components that need ground contact (legs, bases, etc.)
-        ground_components = []
-        supported_components = set()
-        supporting_pairs = []  # Track which components support others
-        
-        # First pass: identify components and their relationships
-        for comp in components:
-            if self._needs_ground_contact(comp):
-                ground_components.append(comp)
-            
-            # Track what components are supported
-            ops = comp.get('operations', [])
-            for op in ops:
-                transform = op.get('transform', {})
-                if transform.get('location'):
-                    # If it's above ground and not a ground component, it needs support
-                    if transform['location'][2] > 0 and comp not in ground_components:
-                        supported_components.add(comp['name'])
-                        
-                        # Find its supporting component
-                        for support in ground_components:
-                            if self._is_supporting(support, comp):
-                                supporting_pairs.append((support, comp))
-        
-        # Second pass: ensure ground components reach the floor
-        for comp in ground_components:
-            ops = comp.get('operations', [])
-            for op in ops:
-                transform = op.get('transform', {})
-                params = op.get('params', {})
-                if transform.get('location'):
-                    # Find the component this supports (if any)
-                    supported_comp = next((pair[1] for pair in supporting_pairs if pair[0] == comp), None)
-                    
-                    if supported_comp:
-                        # Get the supported component's bottom z-coordinate
-                        supported_ops = supported_comp.get('operations', [])
-                        for supported_op in supported_ops:
-                            supported_transform = supported_op.get('transform', {})
-                            supported_params = supported_op.get('params', {})
-                            if supported_transform and supported_params:
-                                # Calculate the actual bottom of the supported component
-                                supported_z = supported_transform['location'][2]
-                                supported_height = supported_params.get('height', 0)
-                                bottom_z = supported_z - (supported_height / 2)
-                                
-                                # Update leg height to reach exactly to the bottom
-                                height = bottom_z
-                                params['height'] = height
-                                transform['location'] = [
-                                    transform['location'][0],
-                                    transform['location'][1],
-                                    height / 2  # Center point should be half height
-                                ]
-                    else:
-                        # Standard ground component handling
-                        height = transform['location'][2] * 2
-                        params['height'] = height
-                        transform['location'][2] = height / 2
-        
-        # Third pass: ensure supported components have connections
-        for comp in components:
-            if comp['name'] in supported_components:
-                self._ensure_support_connections(comp, components)
-        
-        return components
-
-    def _is_supporting(self, support_comp: Dict, target_comp: Dict) -> bool:
-        """Check if one component is supporting another"""
-        support_ops = support_comp.get('operations', [])
-        target_ops = target_comp.get('operations', [])
-        
-        for support_op in support_ops:
-            support_transform = support_op.get('transform', {})
-            if not support_transform:
-                continue
-                
-            for target_op in target_ops:
-                target_transform = target_op.get('transform', {})
-                target_params = target_op.get('params', {})
-                if not (target_transform and target_params):
-                    continue
-                
-                # Check if components are aligned vertically
-                if abs(support_transform['location'][0] - target_transform['location'][0]) < 0.1 and \
-                   abs(support_transform['location'][1] - target_transform['location'][1]) < 0.1:
-                    return True
-        
-        return False
-
-    def _needs_ground_contact(self, component: Dict) -> bool:
-        """Determine if component should contact the ground"""
-        name_lower = component['name'].lower()
-        ground_keywords = ['leg', 'base', 'stand', 'foot', 'support', 'pedestal']
-        return any(keyword in name_lower for keyword in ground_keywords)
-
-    def _ensure_support_connections(self, component: Dict, all_components: List[Dict]) -> None:
-        """Ensure component has proper support connections"""
-        ops = component.get('operations', [])
-        for op in ops:
-            transform = op.get('transform', {})
-            if transform.get('location'):
-                z_height = transform['location'][2]
-                
-                # Add connection points if not present
-                if 'connections' not in op:
-                    op['connections'] = []
-                
-                # Find supporting components
-                for support in all_components:
-                    if self._needs_ground_contact(support):
-                        support_ops = support.get('operations', [])
-                        for support_op in support_ops:
-                            support_transform = support_op.get('transform', {})
-                            if support_transform.get('location'):
-                                # If support is below this component, add connection
-                                if abs(support_transform['location'][0] - transform['location'][0]) < 0.1 and \
-                                   abs(support_transform['location'][1] - transform['location'][1]) < 0.1:
-                                    op['connections'].append({
-                                        "type": "surface_mount",
-                                        "target": support['name'],
-                                        "point": transform['location'],
-                                        "orientation": "vertical",
-                                        "flush": True
-                                    })

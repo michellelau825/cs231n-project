@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 import sys
 import openai
-from typing import Optional
+from typing import Optional, Dict, List
 import argparse
 import json
 import bpy
@@ -16,16 +16,19 @@ from primitive_builder.agents.classifier import FurnitureClassifier
 from primitive_builder.agents.decomposer import SemanticDecomposer
 from primitive_builder.agents.primitive_calls import PrimitiveGenerator
 from primitive_builder.agents.blender_generator import BlenderGenerator
+from primitive_builder.agents.validator import ComponentValidator
 
 class FurnitureGenerator:
     def __init__(self, api_key: str, output_path: Optional[str] = None):
         self.classifier = FurnitureClassifier(api_key)
         self.decomposer = SemanticDecomposer(api_key)
         self.primitive_gen = PrimitiveGenerator(api_key)
+        self.validator = ComponentValidator(api_key)
         self.blender_gen = BlenderGenerator()
         self.output_path = output_path
 
-    def generate(self, prompt: str) -> Optional[str]:
+    def generate(self, prompt: str, pre_validate_path: Optional[str] = None, post_validate_path: Optional[str] = None, validate: bool = True) -> str:
+        """Generate 3D furniture from text description"""
         print("\n=== Starting Generation Pipeline ===")
         print(f"Input Prompt: '{prompt}'")
         
@@ -51,16 +54,30 @@ class FurnitureGenerator:
         print("Generated Specifications:")
         print(json.dumps(primitive_specs, indent=2))
         
-        # Step 4: Create Blender File
-        print("\n4. Creating Blender File...")
-        blend_path = self.blender_gen.create_file(
-            primitive_specs, 
-            custom_path=str(Path(self.output_path).expanduser()) if self.output_path else None
+        # Step 4: Save pre-validation file
+        print("\n4. Creating Pre-validation Blender File...")
+        pre_validate_blend = self.blender_gen.create_file(
+            primitive_specs,
+            custom_path=str(Path(pre_validate_path).expanduser()) if pre_validate_path else None
         )
-        print(f"Blender file created at: {blend_path}")
+        print(f"Pre-validation file created at: {pre_validate_blend}")
         
-        print("\n=== Generation Complete ===")
-        return blend_path
+        # Step 5: Validate and save post-validation file if enabled
+        if validate:
+            print("\n5. Validating Component Connections...")
+            validated_components = self.validator.validate_and_fix(primitive_specs)
+            print("Validated Components:")
+            print(json.dumps(validated_components, indent=2))
+            
+            print("\n6. Creating Post-validation Blender File...")
+            post_validate_blend = self.blender_gen.create_file(
+                validated_components,
+                custom_path=str(Path(post_validate_path).expanduser()) if post_validate_path else None
+            )
+            print(f"Post-validation file created at: {post_validate_blend}")
+            return post_validate_blend
+        
+        return pre_validate_blend
 
 def apply_material(obj, material_info):
     """Apply material to object based on material_info"""
@@ -163,7 +180,9 @@ def create_object(components):
 def main():
     parser = argparse.ArgumentParser(description='Generate 3D furniture from text description')
     parser.add_argument('prompt', type=str, help='Description of the furniture to generate')
-    parser.add_argument('--output', type=str, help='Output path for the blend file', default=None)
+    parser.add_argument('pre_validate_path', type=str, help='Output path for pre-validation blend file')
+    parser.add_argument('post_validate_path', type=str, help='Output path for post-validation blend file')
+    parser.add_argument('--no-validate', action='store_true', help='Skip validation step')
     args = parser.parse_args()
 
     api_key = os.getenv('OPENAI_API_KEY')
@@ -171,11 +190,16 @@ def main():
         print("Error: OPENAI_API_KEY environment variable not set")
         sys.exit(1)
 
-    generator = FurnitureGenerator(api_key, args.output)
-    blend_path = generator.generate(args.prompt)
+    generator = FurnitureGenerator(api_key)
+    blend_path = generator.generate(
+        args.prompt, 
+        pre_validate_path=args.pre_validate_path,
+        post_validate_path=args.post_validate_path,
+        validate=not args.no_validate
+    )
     
     if blend_path:
-        print(f"Generated Blender file: {blend_path}")
+        print(f"\nFinal Blender file: {blend_path}")
 
 if __name__ == "__main__":
     main() 

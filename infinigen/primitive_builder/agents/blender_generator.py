@@ -4,9 +4,13 @@ from pathlib import Path
 from typing import Dict, List, Optional
 import json
 from infinigen.assets.utils import draw, mesh, object
+from infinigen.core import surface
 import importlib
 from importlib import import_module
-from infinigen.core import surface
+from infinigen.core.nodes import node_utils
+from infinigen.core.nodes.node_wrangler import NodeWrangler, Nodes
+from infinigen.assets.utils.decorate import solidify
+import mathutils
 
 def apply_material(obj, material_info):
     """Apply material using the module's apply() function"""
@@ -78,6 +82,7 @@ class BlenderGenerator:
             print(f"\nProcessing component '{component_name}' with {len(operations)} operations")
             
             component_objects = []
+            current_obj = None  # Track current object for operations
             
             # Process each operation for this component
             for op_spec in operations:
@@ -98,34 +103,69 @@ class BlenderGenerator:
                             module = mesh
                         elif module_name == 'object':
                             module = object
+                        elif module_name == 'surface':
+                            module = surface
                             
                         func = getattr(module, func_name)
-                        result = func(**params)
                         
-                        if isinstance(result, bpy.types.Object):
-                            result_obj = result
+                        if operation == 'draw.bezier_curve':
+                            result = func(**params)
+                            if isinstance(result, bpy.types.Object):
+                                current_obj = result
+                                solidify(current_obj, 2, thickness=0.04)
+                                component_objects.append(result)
+                            else:
+                                mesh_obj = bpy.data.objects.new(component_name, result)
+                                bpy.context.scene.collection.objects.link(mesh_obj)
+                                current_obj = mesh_obj
+                                solidify(current_obj, 2, thickness=0.04)
+                                component_objects.append(mesh_obj)
+                        
+                        elif operation == 'surface.add_geomod':
+                            if current_obj is None:
+                                print(f"Warning: add_geomod called without a target object in {component_name}")
+                                continue
+                                
+                            def geo_radius(nw: NodeWrangler, radius=0.015, segments=32):
+                                geometry = nw.new_node(Nodes.GroupInput, input_kwargs={'Geometry': None})
+                                profile = nw.new_node(Nodes.CurveCircle, input_kwargs={
+                                    'Radius': radius,
+                                    'Resolution': segments
+                                })
+                                curve_with_profile = nw.new_node(Nodes.CurveToMesh, input_kwargs={
+                                    'Curve': geometry,
+                                    'Profile Curve': profile
+                                })
+                                return curve_with_profile
+                                
+                            result = func(current_obj, geo_radius, input_args=params['input_args'])
                         else:
-                            mesh_obj = bpy.data.objects.new(component_name, result)
-                            bpy.context.scene.collection.objects.link(mesh_obj)
-                            result_obj = mesh_obj
+                            result = func(**params)
+                            
+                            if isinstance(result, bpy.types.Object):
+                                current_obj = result
+                                component_objects.append(result)
+                            else:
+                                mesh_obj = bpy.data.objects.new(component_name, result)
+                                bpy.context.scene.collection.objects.link(mesh_obj)
+                                current_obj = mesh_obj
+                                component_objects.append(mesh_obj)
                         
-                        # Apply transforms
-                        if transform:
+                        # Apply transforms if this operation created a new object
+                        if transform and current_obj and operation != 'surface.add_geomod':
                             if 'location' in transform:
-                                result_obj.location = transform['location']
+                                current_obj.location = transform['location']
                             if 'rotation' in transform:
-                                result_obj.rotation_euler = transform['rotation']
+                                current_obj.rotation_euler = transform['rotation']
                             if 'scale' in transform:
-                                result_obj.scale = transform['scale']
+                                current_obj.scale = transform['scale']
                         
                         # Apply material if specified
-                        if 'material' in component:
-                            apply_material(result_obj, component['material'])
-                        
-                        component_objects.append(result_obj)
+                        if 'material' in component and current_obj:
+                            apply_material(current_obj, component['material'])
                     
                 except Exception as e:
-                    print(f"Error in operation: {str(e)}")
+                    print(f"Error in operation {operation}: {str(e)}")
                     continue
             
             # Join all objects for this component
@@ -139,6 +179,9 @@ class BlenderGenerator:
             elif component_objects:
                 all_objects.append(component_objects[0])
         
+        # Set up camera
+        self._setup_camera_and_lighting(all_objects)
+        
         # Save file
         if custom_path:
             output_path = Path(custom_path).expanduser()
@@ -149,3 +192,40 @@ class BlenderGenerator:
         print(f"Saving to: {output_path}")
         bpy.ops.wm.save_as_mainfile(filepath=str(output_path))
         return str(output_path)
+
+    def _setup_camera_and_lighting(self, objects):
+        """Set up camera to properly view all objects"""
+        if not objects:
+            return
+        
+        # Create camera
+        bpy.ops.object.camera_add()
+        camera = bpy.context.active_object
+        
+        # Get bounds of all objects
+        bounds_min = np.array([float('inf')] * 3)
+        bounds_max = np.array([float('-inf')] * 3)
+        
+        for obj in objects:
+            for point in obj.bound_box:
+                world_point = obj.matrix_world @ mathutils.Vector(point)
+                bounds_min = np.minimum(bounds_min, np.array(world_point))
+                bounds_max = np.maximum(bounds_max, np.array(world_point))
+        
+        # Calculate center and size
+        center = (bounds_max + bounds_min) / 2
+        size = np.max(bounds_max - bounds_min)
+        
+        # Position camera
+        distance = size * 2  # Distance based on object size
+        camera.location = (center[0] - distance, center[1] - distance, center[2] + distance)
+        
+        # Simple camera rotation - just point at center
+        direction = mathutils.Vector(center - np.array(camera.location))
+        rot_quat = direction.to_track_quat('-Z', 'Y')
+        camera.rotation_euler = rot_quat.to_euler()
+        
+        # Make this the active camera
+        bpy.context.scene.camera = camera
+        
+        print("Camera setup complete")
