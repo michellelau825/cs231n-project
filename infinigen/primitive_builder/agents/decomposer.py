@@ -10,53 +10,101 @@ class SemanticDecomposer:
     
     def __init__(self, api_key: str):
         self.client = openai.OpenAI(api_key=api_key)
-        logger.info("SemanticDecomposer initialized")
-    
-    def decompose(self, prompt: str) -> Dict[str, Any]:
-        """Break down a furniture description into its components"""
-        system_prompt = """You are a 3D modeling expert specializing in geometric decomposition. Break down objects into their core components, being EXPLICIT about quantities of identical components.
+        
+    def decompose(self, prompt: str) -> Dict:
+        system_prompt = """You are a 3D modeling expert specializing in geometric decomposition. Break down objects into their core components, being EXPLICIT about:
+        1. Quantities of identical components
+        2. Their connections
+        3. Geometric properties including curvature
+        4. Spatial relationships
 
-Example 1 - Office Chair:
-Input: "A height-adjustable office chair with armrests"
-Output: {
-    "description": "A height-adjustable seat mounted on a central support column that branches into a five-pronged star-shaped base. Each prong terminates in a caster wheel. The seat is padded with a contoured surface. A curved backrest extends upward from the rear, featuring lumbar support. Two identical adjustable armrests are mounted to the sides.",
+Example - Office Chair:
+{
+    "description": "A height-adjustable office chair with curved back support",
     "components": [
         {
             "name": "Seat_Base",
             "quantity": 1,
-            "description": "Main padded sitting surface with slight contour",
+            "description": "Main padded sitting surface",
             "geometric_properties": {
-                "shape": "curved rectangular prism",
-                "proportions": "width slightly greater than depth"
+                "shape": "curved_surface",
+                "dimensions": {
+                    "width": "medium",
+                    "depth": "medium",
+                    "height": "thin"
+                },
+                "curvature": {
+                    "type": "ergonomic_curve",
+                    "profile": "gentle",  # gentle, moderate, pronounced
+                    "direction": "vertical"  # vertical, horizontal, both
+                }
+            },
+            "connects_to": ["Backrest", "Armrests", "Legs"],
+            "spatial_relationships": {
+                "position": "central",
+                "orientation": "horizontal"
             }
         },
         {
-            "name": "Armrest",
-            "quantity": 2,
-            "description": "Curved support structures for arms",
+            "name": "Chair_Back",
+            "quantity": 1,
+            "description": "Supportive backrest",
             "geometric_properties": {
-                "shape": "curved bar",
-                "identical": true,
-                "mirrored_positions": "left and right of seat"
-            }
+                "shape": "curved_component",
+                "dimensions": {
+                    "width": "medium",
+                    "height": "tall",
+                    "thickness": "medium"
+                },
+                "curvature": {
+                    "type": "s_curve",  # straight, simple_curve, s_curve
+                    "profile": "moderate",
+                    "direction": "vertical"
+                }
+            },
+            "connects_to": ["Seat_Base", "Armrests"]
         },
         {
-            "name": "Star_Base_Prong",
-            "quantity": 5,
-            "description": "Radial support arms with wheels",
+            "name": "Chair_Leg",
+            "quantity": 4,
+            "description": "Support legs",
             "geometric_properties": {
-                "shape": "elongated triangle",
-                "identical": true,
-                "radial_arrangement": "72 degrees apart"
-            }
+                "shape": "curved_component",
+                "dimensions": {
+                    "length": "medium",
+                    "thickness": "thin"
+                },
+                "curvature": {
+                    "type": "simple_curve",  # or "straight" for vertical legs
+                    "profile": "gentle",
+                    "direction": "outward"
+                }
+            },
+            "connects_to": ["Seat_Base", "Base_Support"]
         }
-    ],
-    "spatial_relationships": [
-        "Seat Base centered on central column",
-        "Armrests symmetrically placed on left and right sides",
-        "Five identical prongs arranged radially"
     ]
 }
+
+Curvature Types:
+- straight: No curve, linear component
+- simple_curve: Single direction curve
+- s_curve: Complex curve with multiple directions
+- ergonomic_curve: Specific for seating surfaces
+- spiral: Helical or spiral curve
+- compound_curve: Multiple connected curves
+
+Profile Intensities:
+- gentle: Slight, subtle curve
+- moderate: Noticeable, balanced curve
+- pronounced: Dramatic, strong curve
+
+Curve Directions:
+- vertical: Up/down curve
+- horizontal: Left/right curve
+- both: Combined curves
+- outward: Away from center
+- inward: Toward center
+- spiral: Rotational curve
 
 REQUIREMENTS:
 1. Always specify exact quantities for each component
