@@ -187,34 +187,20 @@ Important:
         Return the resulting .blend path if successful, else None.
         """
         blender_path = find_blender()
-        if blender_path is None:
-            print("ERROR: Could not find Blender on PATH or in common locations.")
+        if not blender_path:
             return None
 
-        # The Blender‐side script must live in the primitive_builder directory
-        script_path = Path(__file__).parent / "new_blendrtojson.py"
-        if not script_path.exists():
-            print(f"ERROR: Blender script not found at {script_path}")
-            return None
+        # Expand ~/ and make absolute
+        json_path = Path(json_path).expanduser().resolve()
 
-        print(f"→ Using Blender: {blender_path}")
-        print(f"→ Using Blender‐side script: {script_path}")
+        script_path = project_root / "primitive_builder" / "new_blendrtojson.py"
         print(f"→ Passing JSON: {json_path}")
-
-        # Dump the first few lines of the JSON to stdout for debugging:
-        snippet = json.dumps(json.loads(json_path.read_text()), indent=2)[:500]
-        print("→ JSON snippet (first 500 chars):")
-        print(snippet, "\n…")
-
         cmd = [
             str(blender_path),
             "--background",
             "--python", str(script_path),
             "--", str(json_path)
         ]
-        print("→ Running command:")
-        print("  ", " ".join(cmd))
-
         result = subprocess.run(cmd, capture_output=True, text=True)
         print(f"← Blender return code: {result.returncode}")
         if result.stderr:
@@ -268,18 +254,17 @@ Important:
         print(json.dumps(specs, indent=2)[:500], "\n…")
 
         # 3) Write JSON file
-        print("\n3) Saving JSON file…")
         if output:
-            # If user provided something like `/foo/bar.blend`, replace extension with `.json`
-            out = Path(output)
+            # Expand “~” immediately
+            out = Path(output).expanduser()
             json_path = out.with_suffix(".json")
         else:
-            json_path = Path.cwd() / "generated_primitives.json"
-        try:
-            self.save_json(specs, json_path)
-        except Exception as e:
-            print("ERROR: Could not write JSON to disk.")
-            raise
+            json_path = Path.home() / "Desktop" / "generated-assets" / "primitives.json"
+
+        json_path = json_path.expanduser().resolve()  # ensure it’s absolute
+
+        self.save_json(specs, json_path)
+        print(f"✓ JSON written to: {json_path}")
 
         # 4) Launch Blender
         print("\n4) Launching Blender to convert JSON → .blend…")

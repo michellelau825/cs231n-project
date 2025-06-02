@@ -47,10 +47,6 @@ def find_blender() -> Path:
 def generate_blend_file(json_path: Path) -> Optional[Path]:
     """Generate Blender file from JSON specifications"""
     try:
-        print("\nDebug Information:")
-        print(f"1. Project root: {project_root}")
-        print(f"2. JSON path exists: {json_path.exists()}")
-        print(f"3. JSON path absolute: {json_path.absolute()}")
         
         # Find Blender executable
         blender_path = find_blender()

@@ -296,6 +296,8 @@ def main():
     try:
         idx = sys.argv.index("--")
         json_path = Path(sys.argv[idx + 1])
+
+        json_path = json_path.expanduser().resolve()
     except Exception:
         print("USAGE ERROR: Could not parse JSON path after `--`.")
         sys.exit(1)
