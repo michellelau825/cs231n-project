@@ -48,7 +48,7 @@ class ComponentValidator:
 
         try:
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model="gpt-4o-2024-08-06",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": str([c["name"] for c in components])}  # Only send names
@@ -240,16 +240,31 @@ class ComponentValidator:
         try:
             operation = component["operations"][0]
             transform = operation.get("transform", {})
-            location = transform.get("location", [0, 0, 0])
-            scale = transform.get("scale", [1, 1, 1])
+            location = np.array(transform.get("location", [0, 0, 0]))
             
-            print(f"\nCalculating connection point for {component['name']}:")
-            print(f"  Operation: {operation['operation']}")
-            print(f"  Transform: {transform}")
+            if operation["operation"] == "draw.bezier_curve" or operation["operation"] == "draw.align_bezier":
+                # Get anchor points - these are [x_coords, y_coords, z_coords]
+                anchors = np.array(operation["params"]["anchors"])
+                
+                # Need to transpose to get individual points
+                points = np.array([
+                    [anchors[0][i], anchors[1][i], anchors[2][i]] 
+                    for i in range(len(anchors[0]))
+                ])
+                
+                # Add location transform to each point
+                points = points + location
+                
+                print(f"  Bezier points after transform: {points}")
+                return {
+                    "top": {"point": points[0], "priority": 1},  # First point connects to seat
+                    "bottom": {"point": points[-1], "priority": 1},  # Last point is ground
+                    "center": {"point": points[1], "priority": 0}  # Middle control point
+                }
             
-            if operation["operation"] == "mesh.build_sphere_mesh":
+            elif operation["operation"] == "mesh.build_sphere_mesh":
                 radius = operation["params"].get("radius", 0.5)
-                scaled_radius = radius * scale[2]  # Use z-scale for vertical radius
+                scaled_radius = radius * transform.get("scale", [1, 1, 1])[2]  # Use z-scale for vertical radius
                 top_point = np.array([
                     location[0],
                     location[1],
@@ -269,7 +284,7 @@ class ComponentValidator:
             
             elif operation["operation"] == "mesh.build_cylinder_mesh":
                 height = operation["params"].get("height", 1.0)
-                scaled_height = height * scale[2]
+                scaled_height = height * transform.get("scale", [1, 1, 1])[2]
                 top_point = np.array([
                     location[0],
                     location[1],
@@ -289,7 +304,7 @@ class ComponentValidator:
             
             elif operation["operation"] == "mesh.build_box_mesh":
                 height = operation["params"].get("height", 1.0)
-                scaled_height = height * scale[2]
+                scaled_height = height * transform.get("scale", [1, 1, 1])[2]
                 top_point = np.array([
                     location[0],
                     location[1],
@@ -382,41 +397,44 @@ class ComponentValidator:
             return component
 
     def _get_lowest_point(self, component: Dict) -> float:
-        """Get the lowest z-coordinate of a component based on its operation and transform"""
-        print(f"\nGetting lowest point for {component['name']}:")
-        operation = component["operations"][0]["operation"]
-        params = component["operations"][0]["params"]
-        transform = component["operations"][0].get("transform", {})
-        location = transform.get("location", [0, 0, 0])
-        print(f"  Operation: {operation}")
-        print(f"  Location: {location}")
-
-        if operation == "draw.bezier_curve":
-            # For curves, check all anchor points
-            anchors = params["anchors"]
-            lowest_anchor = min(point[2] for point in anchors)
-            print(f"  Bezier curve - Checking all anchors. Lowest z: {lowest_anchor}")
-            return lowest_anchor
+        """Calculate lowest z-coordinate of a component"""
+        try:
+            operation = component["operations"][0]
+            transform = operation.get("transform", {})
+            location = np.array(transform.get("location", [0, 0, 0]))
+            
+            if operation["operation"] in ["draw.bezier_curve", "draw.align_bezier"]:
+                # Anchors are [x_coords, y_coords, z_coords]
+                anchors = np.array(operation["params"]["anchors"])
+                # Get z coordinates and add location offset
+                z_coords = anchors[2] + location[2]
+                lowest_z = np.min(z_coords)
+                print(f"Bezier curve lowest point: {lowest_z}")
+                return lowest_z
+            
+            elif operation["operation"] == "mesh.build_cylinder_mesh":
+                height = operation["params"]["height"]
+                lowest = location[2] - height/2
+                print(f"  Cylinder - Height: {height}, Lowest z: {lowest}")
+                return lowest
+            
+            elif operation["operation"] == "mesh.build_box_mesh":
+                height = operation["params"]["height"]
+                lowest = location[2] - height/2
+                print(f"  Box - Height: {height}, Lowest z: {lowest}")
+                return lowest
+            
+            elif operation["operation"] == "mesh.build_sphere_mesh":
+                radius = operation["params"]["radius"]
+                lowest = location[2] - radius
+                print(f"  Sphere - Radius: {radius}, Lowest z: {lowest}")
+                return lowest
+            
+            else:
+                print(f"Warning: Unknown operation type {operation['operation']}, using location z")
+                return location[2]
         
-        elif operation == "mesh.build_cylinder_mesh":
-            height = params["height"]
-            lowest = location[2] - height/2
-            print(f"  Cylinder - Height: {height}, Lowest z: {lowest}")
-            return lowest
-        
-        elif operation == "mesh.build_box_mesh":
-            height = params["height"]
-            lowest = location[2] - height/2
-            print(f"  Box - Height: {height}, Lowest z: {lowest}")
-            return lowest
-        
-        elif operation == "mesh.build_sphere_mesh":
-            radius = params["radius"]
-            lowest = location[2] - radius
-            print(f"  Sphere - Radius: {radius}, Lowest z: {lowest}")
-            return lowest
-        
-        else:
-            print(f"Warning: Unknown operation type {operation}, using location z")
-            return location[2]
+        except Exception as e:
+            print(f"Error getting lowest point for {component['name']}: {e}")
+            return 0  # Default to 0 if there's an error
 

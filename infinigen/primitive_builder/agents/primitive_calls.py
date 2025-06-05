@@ -3,7 +3,6 @@ from typing import Dict, List
 import json
 from pathlib import Path
 from .context_provider import ContextProvider
-from .materials_agent import MaterialsAgent
 
 class PrimitiveGenerator:
     def __init__(self, api_key: str):
@@ -11,7 +10,6 @@ class PrimitiveGenerator:
         self.primitives_dir = Path.home() / "Desktop" / "generated-assets" / "primitives"
         self.primitives_dir.mkdir(parents=True, exist_ok=True)
         self.context_provider = ContextProvider()
-        self.materials_agent = MaterialsAgent(api_key)
         
     def generate(self, components: Dict) -> List[Dict]:
         print("\n=== Starting Primitive Generation ===")
@@ -120,7 +118,7 @@ Blender Operations (use only when needed):
 - bpy.ops.object.modifier_add(type='SUBSURF')  # Smooth surfaces
 - bpy.ops.object.shade_smooth()  # Improve appearance
 
-Very important: if component is a leg or connecting THIN component, and shape is curved_component (not straight), use draw.bezier_curve with to_mesh=True.
+Very important: if component is a leg or connecting THIN component, and shape is curved_component (not straight), use draw.align_bezier.
 if component is a cushion, try using mesh.build_sphere_mesh and scale it appropriately.
 COMPONENT-BASED STRUCTURE:
 Each component from the decomposition must have its own set of operations. Output format:
@@ -374,9 +372,9 @@ Before outputting, verify that EVERY SINGLE component from the decomposer has co
 Output ONLY valid JSON with no additional text."""
 
         try:
-            print("\nCalling GPT-4...")
+            print("\nCalling GPT-4o...")
             response = self.client.chat.completions.create(
-                model="gpt-4-0125-preview",
+                model="gpt-4o-2024-08-06",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": json.dumps(components)}

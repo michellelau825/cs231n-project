@@ -38,7 +38,7 @@ class FurnitureGenerator:
         print(f"Classification Result: {classification}")
         print(f"Explanation: {explanation}")
         
-        if classification == "not a furniture":
+        if classification == "does not pass":
             print("Rejected: Generation stopped.")
             return None
 
@@ -68,6 +68,14 @@ class FurnitureGenerator:
             validated_components = self.validator.validate_and_fix(primitive_specs)
             print("Validated Components:")
             print(json.dumps(validated_components, indent=2))
+            
+            # Save validated components to JSON file
+            validated_json_path = Path(post_validate_path).expanduser()
+            validated_json_path.parent.mkdir(parents=True, exist_ok=True)
+            validated_json_path = validated_json_path.parent / "validated_components.json"
+            with open(validated_json_path, 'w') as f:
+                json.dump(validated_components, f, indent=2)
+            print(f"Saved validated components to: {validated_json_path}")
             
             print("\n6. Creating Post-validation Blender File...")
             post_validate_blend = self.blender_gen.create_file(

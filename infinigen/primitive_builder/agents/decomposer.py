@@ -120,9 +120,9 @@ Provide a similar breakdown for the given object, focusing on:
 Avoid mentioning colors, materials, or textures unless specifically relevant to the shape."""
 
         try:
-            print("\nSending prompt to GPT-4...")
+            print("\nSending prompt to GPT-4o...")
             response = self.client.chat.completions.create(
-                model="gpt-4-0125-preview",
+                model="gpt-4o-2024-08-06",
                 messages=[
                     {"role": "system", "content": system_prompt + "\nIMPORTANT: Output ONLY valid JSON with no additional text."},
                     {"role": "user", "content": prompt}
@@ -131,7 +131,7 @@ Avoid mentioning colors, materials, or textures unless specifically relevant to 
                 response_format={"type": "json_object"}  # Force JSON response
             )
             
-            print("\nGPT-4 Response received. Attempting to parse JSON...")
+            print("\nGPT-4o Response received. Attempting to parse JSON...")
             content = response.choices[0].message.content
             print(f"\nRaw response:\n{content}")
             
