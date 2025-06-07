@@ -6,5 +6,5 @@ We built on top of the Infinigen codebase. We wrote all our files in `cs231n-pro
 Please check the `agents` folder for each agent's implementation and `full_agent.py` for the full implementation. 
 `decomposed_agent.py` and `direct_primitive_agent.py` are incomplete versions of `full_agent.py` used for comparison.
 
-Use case example: Run `python primitive_builder/full_agent.py "DESCRIPTION" "~/Desktop/generated-assets/PRE-VALIDATOR.blend" "~/Desktop/generated-assets/POST-VALIDATOR.blend"` to generate a 
-`DESCRIPTION` furniture, with the pre-validator version saved at custom path `"~/Desktop/generated-assets/PRE-VALIDATOR.blend"` and the post-validator version saved at custom path `"~/Desktop/generated-assets/POST-VALIDATOR.blend"`.
+Calling full agent: Run `python primitive_builder/full_agent.py "DESCRIPTION" "~/Desktop/generated-assets/PRE-VALIDATOR.blend" "~/Desktop/generated-assets/POST-VALIDATOR.blend"` to generate a 
+`DESCRIPTION` furniture, with the pre-validator version saved at custom path `"~/Desktop/generated-assets/PRE-VALIDATOR.blend"` and the post-validator version saved at custom path `"~/Desktop/generated-assets/POST-VALIDATOR.blend"`. An example of the DESCRIPTION would be: "A round table with two candles on top of it."
