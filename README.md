@@ -7,4 +7,4 @@ Please check the `agents` folder for each agent's implementation and `full_agent
 `decomposed_agent.py` and `direct_primitive_agent.py` are incomplete versions of `full_agent.py` used for comparison.
 
 Use case example: Run `python primitive_builder/full_agent.py "DESCRIPTION" "~/Desktop/generated-assets/PRE-VALIDATOR.blend" "~/Desktop/generated-assets/POST-VALIDATOR.blend"` to generate a 
-`DESCRIPTION` furniture, with the pre-validator version saved at custom path "~/Desktop/generated-assets/PRE-VALIDATOR.blend" and the post-validator version saved at custom path "~/Desktop/generated-assets/POST-VALIDATOR.blend".
+`DESCRIPTION` furniture, with the pre-validator version saved at custom path `"~/Desktop/generated-assets/PRE-VALIDATOR.blend"` and the post-validator version saved at custom path `"~/Desktop/generated-assets/POST-VALIDATOR.blend"`.
