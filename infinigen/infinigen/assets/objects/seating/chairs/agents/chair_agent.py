@@ -4,7 +4,8 @@ import json
 from pathlib import Path
 from typing import Literal
 
-openai.api_key = 'sk-304PqFA9xUn4-ZHBOzaeYFFEhxaV32Ycpv4eWjXVAZT3BlbkFJhZIxSEzpKvaQt8A7LMOQ_2hpnVgpnDkBM8jvlEdMsA'
+# TODO: add key and uncomment
+# openai.api_key = ''
 
 def determine_chair_type(description: str, chair_codes: dict) -> Literal["regular", "bar", "office"]:
     """Determine chair type by matching description against implementation capabilities"""
